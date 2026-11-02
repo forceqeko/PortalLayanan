@@ -6,6 +6,7 @@ import { SiteProvider } from './context/site-context'
 import { ContentDetailPage } from './pages/ContentDetail'
 import { InformationPage } from './pages/Information'
 import { LandingPage } from './pages/Landing'
+import { QdiDevelopmentPage } from './pages/QdiDevelopment'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -49,6 +50,14 @@ function AnimatedRoutes() {
           element={
             <PageTransition>
               <InformationPage />
+            </PageTransition>
+          }
+        />
+        <Route
+          path="/qdi"
+          element={
+            <PageTransition>
+              <QdiDevelopmentPage />
             </PageTransition>
           }
         />

@@ -63,7 +63,6 @@ export function LandingPage() {
 
   const heroFailed = failedHeroAsset === siteConfig.heroAsset
   const ptkUrl = getSafeServiceUrl('ptk', site)
-  const qdiUrl = getSafeServiceUrl('qdi', site)
   const waUrl = getSafeServiceUrl('whatsapp', site)
 
   return (
@@ -377,17 +376,15 @@ export function LandingPage() {
           </a>
 
           {/* CARD 2: Decision Intelligence (QDI) - Indigo Frosted Glass */}
-          <a
-            href={qdiUrl}
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            to={`/qdi?site=${site}`}
             data-testid="cta-hero-qdi"
             onClick={() =>
               trackEvent({
                 event_name: 'qdi_redirect',
                 site_context: site,
                 entry_source: entrySource,
-                target: 'qdi',
+                target: 'qdi_development_page',
               })
             }
             className="glass-card-qdi group flex min-h-[82px] items-center justify-between gap-3.5 rounded-3xl p-4 text-white transition duration-200 hover:-translate-y-1.5 lg:min-h-[196px] lg:flex-col lg:items-stretch lg:justify-between lg:p-5"
@@ -453,7 +450,7 @@ export function LandingPage() {
             >
               →
             </span>
-          </a>
+          </Link>
 
           {/* CARD 3: Informasi & Sosialisasi - Teal Frosted Glass */}
           <Link
