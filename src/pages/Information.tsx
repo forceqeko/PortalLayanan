@@ -51,7 +51,7 @@ export function InformationPage() {
     >
       {/* Top Navbar in Clean Light Theme */}
       <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/95 backdrop-blur-md shadow-xs">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
           <Link
             to={`/?site=${site}`}
             className="group flex items-center gap-3"
@@ -84,11 +84,11 @@ export function InformationPage() {
       </header>
 
       {/* Hero Visual Banner in Clean Editorial Light Theme */}
-      <section className="relative overflow-hidden border-b border-slate-200 bg-gradient-to-b from-sky-50/70 via-white to-slate-50 px-4 py-10 sm:px-6 sm:py-14">
+      <section className="relative overflow-hidden border-b border-slate-200 bg-gradient-to-b from-sky-50/70 via-white to-slate-50 py-10 sm:py-14">
         {/* Subtle Background Glow */}
         <div className="pointer-events-none absolute inset-0 bg-radial from-sky-400/10 via-transparent to-transparent opacity-40" />
 
-        <div className="relative mx-auto max-w-7xl">
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight text-slate-900 leading-tight">
             Pusat Informasi, Edukasi & Galeri Karantina
           </h1>
@@ -99,7 +99,7 @@ export function InformationPage() {
       </section>
 
       {/* Main Content Stage */}
-      <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:py-12">
+      <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 lg:py-12">
         {/* Loading State */}
         {isLoading && (
           <div
