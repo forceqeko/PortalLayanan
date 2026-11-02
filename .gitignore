@@ -1,0 +1,35 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# Build & Dependencies
+node_modules
+dist
+dist-ssr
+*.local
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+
+# Environment Secrets (NEVER COMMIT)
+.env
+.env.local
+.env.*.local
+api/local.settings.json
+
+# Editor
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+

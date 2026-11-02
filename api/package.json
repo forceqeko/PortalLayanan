@@ -1,0 +1,8 @@
+{
+  "name": "portal-gate-bkhit-sulut-api",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Lightweight Event Endpoint for Portal Gate BKHIT Sulawesi Utara (PRD §14 & §15)",
+  "type": "module"
+}
+
