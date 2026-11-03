@@ -27,6 +27,7 @@ export type PublishedContentItem = {
   status: ContentStatus
   mediaUrl: string | null
   videoUrl?: string | null
+  documentUrl?: string | null
   publishAt?: string | null
   expireAt?: string | null
   updatedAt: string
@@ -136,6 +137,12 @@ export function parsePublishedProjection(raw: unknown): PublishedProjection {
           ? item.videoUrl
           : typeof item.video_url === 'string'
             ? item.video_url
+            : null,
+      documentUrl:
+        typeof item.documentUrl === 'string'
+          ? item.documentUrl
+          : typeof item.document_url === 'string'
+            ? item.document_url
             : null,
       publishAt:
         typeof item.publishAt === 'string'

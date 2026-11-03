@@ -15,7 +15,9 @@
     "check:contrast": "node scripts/contrast-check.mjs",
     "analytics:sample": "node scripts/generate-sample-events.mjs",
     "analytics:aggregate": "node scripts/aggregate-analytics.mjs",
-    "audit:release": "node scripts/release-audit.mjs"
+    "audit:release": "node scripts/release-audit.mjs",
+    "sync:sanity:mock": "node scripts/sanity-sync.mjs --mock",
+    "sync:sanity": "node scripts/sanity-sync.mjs"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.66.0",

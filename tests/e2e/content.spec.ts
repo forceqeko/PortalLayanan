@@ -78,5 +78,66 @@ test.describe('Content Projection, Site Scope & Draft Protection (UAT-11, UAT-12
     await page.getByTestId('back-to-landing').click()
     await expect(page.getByTestId('hero-section')).toBeVisible()
   })
+
+  test('Phase 4B (Sanity CMS Adapter): Transforms Sanity response, blocks drafts.*, and renders video + PDF attachment', async ({
+    page,
+  }) => {
+    await page.route('**/content/sample.json', async (route) => {
+      await route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        body: JSON.stringify({
+          result: [
+            {
+              _id: 'sanity-doc-sulut-01',
+              _type: 'karantinaContent',
+              _updatedAt: '2026-10-20T08:30:00Z',
+              title: 'Rilis Resmi Sanity CMS BKHIT Sulawesi Utara',
+              slug: { current: 'rilis-resmi-sanity-cms-bkhit' },
+              summary: 'Pengumuman resmi dengan lampiran video MP4 dan dokumen PDF.',
+              body: 'Paragraf pertama rincian informasi.\n\nParagraf kedua rincian informasi.',
+              category: 'announcement',
+              siteScope: 'GLOBAL',
+              status: 'PUBLISHED',
+              mediaImage: {
+                asset: { url: '/hero/sulut.jpg' },
+              },
+              videoFile: {
+                asset: { url: '/media/sample-video.mp4' },
+              },
+              documentFile: {
+                asset: { url: '/media/panduan-ptk-online.pdf' },
+              },
+            },
+            {
+              _id: 'drafts.sanity-doc-rahasia-99',
+              _type: 'karantinaContent',
+              _updatedAt: '2026-10-21T08:30:00Z',
+              title: 'DRAF INTERNAL SANITY',
+              slug: { current: 'draf-internal-sanity' },
+              summary: 'Tidak boleh tampil di publik.',
+              category: 'announcement',
+              siteScope: 'GLOBAL',
+              status: 'PUBLISHED',
+            },
+          ],
+        }),
+      })
+    })
+
+    await page.goto('/informasi?site=sulut')
+    await expect(
+      page.getByTestId('info-card-rilis-resmi-sanity-cms-bkhit'),
+    ).toBeVisible()
+    await expect(
+      page.getByTestId('info-card-draf-internal-sanity'),
+    ).toHaveCount(0)
+
+    await page
+      .getByTestId('read-more-rilis-resmi-sanity-cms-bkhit')
+      .click()
+    await expect(page.getByTestId('content-detail-article')).toBeVisible()
+    await expect(page.getByTestId('content-detail-document')).toBeVisible()
+  })
 })
 

@@ -1,0 +1,91 @@
+{
+  "ms": 14,
+  "query": "*[_type == \"karantinaContent\"]",
+  "result": [
+    {
+      "_id": "sanity-doc-sulut-01",
+      "_type": "karantinaContent",
+      "_createdAt": "2026-10-20T08:00:00Z",
+      "_updatedAt": "2026-10-20T08:30:00Z",
+      "title": "Peningkatan Akses Layanan Digital Karantina di Siau, Tahuna, dan Melonguane",
+      "slug": {
+        "_type": "slug",
+        "current": "peningkatan-akses-layanan-digital-kepulauan"
+      },
+      "summary": "BKHIT Sulawesi Utara menyediakan akses terpadu menuju PTK Online, informasi PPID, dan kanal konsultasi resmi pada jaringan titik layanan kepulauan.",
+      "body": "Balai Karantina Hewan, Ikan, dan Tumbuhan (BKHIT) Sulawesi Utara terus memperkuat aksesibilitas layanan publik di wilayah kepulauan perbatasan.\n\nMelalui gerbang layanan terpadu ini, pengguna jasa di Pelabuhan Siau, Tahuna, dan Melonguane dapat langsung mengakses permohonan tindakan karantina (PTK Online) serta memperoleh panduan persyaratan dokumen dengan cepat dan hemat kuota.",
+      "category": "announcement",
+      "siteScope": "GLOBAL",
+      "status": "PUBLISHED",
+      "sortOrder": 1,
+      "mediaImage": {
+        "asset": {
+          "url": "https://cdn.sanity.io/images/demo-bkhit/production/sulut-harbor-hero.jpg"
+        }
+      },
+      "videoFile": {
+        "asset": {
+          "url": "https://cdn.sanity.io/files/demo-bkhit/production/sosialisasi-karantina-sulut.mp4"
+        }
+      },
+      "documentFile": {
+        "asset": {
+          "url": "https://cdn.sanity.io/files/demo-bkhit/production/panduan-ptk-online-2026.pdf"
+        }
+      }
+    },
+    {
+      "_id": "sanity-doc-tahuna-02",
+      "_type": "karantinaContent",
+      "_createdAt": "2026-10-21T09:00:00Z",
+      "_updatedAt": "2026-10-21T10:00:00Z",
+      "title": "Pengawasan Lalu Lintas Komoditas Pertanian dan Perikanan di Pelabuhan Tahuna",
+      "slug": {
+        "_type": "slug",
+        "current": "pengawasan-komoditas-pelabuhan-tahuna"
+      },
+      "summary": "Petugas Karantina Wilayah Kerja Tahuna melaksanakan pemeriksaan fisik dan dokumen guna mencegah penyebaran HPHK, HPIK, dan OPTK di Kepulauan Sangihe.",
+      "body": "Kegiatan pengawasan rutin dilaksanakan pada setiap kedatangan dan keberangkatan kapal penumpang maupun kargo di Pelabuhan Tahuna.\n\nMasyarakat diimbau untuk selalu melaporkan komoditas hewan, ikan, dan tumbuhan kepada petugas karantina sebelum pemuatan ke atas kapal.",
+      "category": "article",
+      "siteScope": "TAHUNA",
+      "status": "PUBLISHED",
+      "sortOrder": 10,
+      "mediaImage": {
+        "asset": {
+          "url": "https://cdn.sanity.io/images/demo-bkhit/production/tahuna-inspection.jpg"
+        }
+      }
+    },
+    {
+      "_id": "drafts.sanity-doc-secret-draft-99",
+      "_type": "karantinaContent",
+      "_createdAt": "2026-10-22T09:00:00Z",
+      "_updatedAt": "2026-10-22T09:15:00Z",
+      "title": "DRAF INTERNAL BELUM DISETUJUI: Rencana Jadwal Piket Internal",
+      "slug": {
+        "_type": "slug",
+        "current": "draf-internal-rahasia"
+      },
+      "summary": "Dokumen ini masih berstatus draf di Sanity Studio dan tidak boleh tampil di halaman publik.",
+      "category": "announcement",
+      "siteScope": "GLOBAL",
+      "status": "PUBLISHED"
+    },
+    {
+      "_id": "sanity-doc-unapproved-98",
+      "_type": "karantinaContent",
+      "_createdAt": "2026-10-22T10:00:00Z",
+      "_updatedAt": "2026-10-22T10:15:00Z",
+      "title": "DOKUMEN VALIDASI INTERNAL: Belum Siap Rilis",
+      "slug": {
+        "_type": "slug",
+        "current": "dokumen-validasi-internal"
+      },
+      "summary": "Status masih VALIDATION sehingga wajib dibuang oleh filter adapter.",
+      "category": "article",
+      "siteScope": "SIAU",
+      "status": "VALIDATION"
+    }
+  ]
+}
+

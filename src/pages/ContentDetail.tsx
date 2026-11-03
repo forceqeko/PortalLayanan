@@ -181,6 +181,37 @@ export function ContentDetailPage() {
                 ))}
             </div>
 
+            {/* Official PDF Document Attachment (Sanity CMS / Projection) */}
+            {item.documentUrl && (
+              <div
+                data-testid="content-detail-document"
+                className="mt-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-2xl border border-sky-200 bg-sky-50/70 p-4 sm:p-5"
+              >
+                <div className="flex items-start gap-3">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-sky-600 text-white font-black text-xs shadow-xs">
+                    PDF
+                  </div>
+                  <div>
+                    <div className="text-xs sm:text-sm font-extrabold text-slate-900">
+                      Lampiran Dokumen Resmi Karantina
+                    </div>
+                    <p className="mt-0.5 text-[11px] sm:text-xs text-slate-600">
+                      Unduh atau baca dokumen lengkap dalam format PDF resmi BKHIT Sulawesi Utara.
+                    </p>
+                  </div>
+                </div>
+                <a
+                  href={resolvePublicAsset(item.documentUrl)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex min-h-[44px] shrink-0 items-center justify-center gap-2 rounded-xl bg-sky-700 px-4 py-2.5 text-xs font-extrabold text-white shadow-xs transition hover:bg-sky-800 active:scale-95"
+                >
+                  <span>Buka Dokumen PDF</span>
+                  <span aria-hidden="true">↗</span>
+                </a>
+              </div>
+            )}
+
             {/* Bottom Actions */}
             <div className="mt-8 pt-6 border-t border-slate-200 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
               <a

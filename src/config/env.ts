@@ -4,11 +4,19 @@ const rawBase = import.meta.env.BASE_URL || '/'
 export const BASE_PATH = rawBase.endsWith('/') ? rawBase : `${rawBase}/`
 
 export function resolvePublicAsset(relativePath: string): string {
+  if (/^https?:\/\//i.test(relativePath.trim())) {
+    return relativePath.trim()
+  }
   const clean = relativePath.replace(/^\/+/, '')
   return `${BASE_PATH}${clean}`
 }
 
 export const ENV = {
+  SANITY_PROJECT_ID: (import.meta.env.VITE_SANITY_PROJECT_ID || '').trim(),
+  SANITY_DATASET: (import.meta.env.VITE_SANITY_DATASET || 'production').trim(),
+  SANITY_API_VERSION: (
+    import.meta.env.VITE_SANITY_API_VERSION || '2025-02-01'
+  ).trim(),
   CONTENT_PROJECTION_URL:
     import.meta.env.VITE_CONTENT_PROJECTION_URL ||
     resolvePublicAsset('content/sample.json'),
