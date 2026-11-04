@@ -17,7 +17,10 @@
     "analytics:aggregate": "node scripts/aggregate-analytics.mjs",
     "audit:release": "node scripts/release-audit.mjs",
     "sync:sanity:mock": "node scripts/sanity-sync.mjs --mock",
-    "sync:sanity": "node scripts/sanity-sync.mjs"
+    "sync:sanity": "node scripts/sanity-sync.mjs",
+    "studio:install": "npm --prefix studio install",
+    "studio": "npm --prefix studio run dev",
+    "studio:deploy": "npm --prefix studio run deploy"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.66.0",

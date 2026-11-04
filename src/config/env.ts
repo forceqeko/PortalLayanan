@@ -12,7 +12,9 @@ export function resolvePublicAsset(relativePath: string): string {
 }
 
 export const ENV = {
-  SANITY_PROJECT_ID: (import.meta.env.VITE_SANITY_PROJECT_ID || '').trim(),
+  SANITY_PROJECT_ID: (
+    import.meta.env.VITE_SANITY_PROJECT_ID || 'vymwpeju'
+  ).trim(),
   SANITY_DATASET: (import.meta.env.VITE_SANITY_DATASET || 'production').trim(),
   SANITY_API_VERSION: (
     import.meta.env.VITE_SANITY_API_VERSION || '2025-02-01'
