@@ -65,7 +65,20 @@ test.describe('Content Projection, Site Scope & Draft Protection (UAT-11, UAT-12
       page.getByTestId('info-card-panduan-permohonan-ptk-online'),
     ).toBeVisible()
 
-    // 5. Click read more opens ContentDetail page with rich media
+    // 5. Test interactive category filter & live search on Information Page
+    await page.getByTestId('info-filter-service').click()
+    await expect(
+      page.getByTestId('info-card-panduan-permohonan-ptk-online'),
+    ).toBeVisible()
+    await page.getByTestId('info-filter-all').click()
+
+    await page.getByTestId('info-search-input').fill('Ulow Ondong')
+    await expect(
+      page.getByTestId('info-card-jadwal-layanan-pelabuhan-ulow-ondong-siau'),
+    ).toBeVisible()
+    await page.getByTestId('info-search-clear').click()
+
+    // 6. Click read more opens ContentDetail page with rich media, share actions, & related articles
     await page
       .getByTestId('read-more-panduan-permohonan-ptk-online')
       .click()
@@ -73,8 +86,11 @@ test.describe('Content Projection, Site Scope & Draft Protection (UAT-11, UAT-12
     await expect(page.getByTestId('content-detail-article')).toContainText(
       'Panduan Permohonan Tindakan Karantina',
     )
+    await expect(page.getByTestId('share-whatsapp-btn')).toBeVisible()
+    await expect(page.getByTestId('copy-link-btn')).toBeVisible()
+    await expect(page.getByTestId('related-articles-section')).toBeVisible()
 
-    // 6. Back button returns to landing
+    // 7. Back button returns to landing
     await page.getByTestId('back-to-landing').click()
     await expect(page.getByTestId('hero-section')).toBeVisible()
   })
