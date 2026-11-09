@@ -16,6 +16,14 @@ test.describe('Single-Viewport Full-Page Gateway & Accessibility (UAT-16, UAT-17
     await expect(page.getByTestId('cta-hero-info')).toBeVisible()
     await expect(page.getByTestId('cta-hero-wa')).toBeVisible()
 
+    // Ensure frosted glassmorphism backdrop-filter is preserved in compiled CSS
+    for (const cardId of ['cta-hero-ptk', 'cta-hero-qdi', 'cta-hero-info', 'cta-hero-wa']) {
+      const backdropFilter = await page
+        .getByTestId(cardId)
+        .evaluate((el) => window.getComputedStyle(el).backdropFilter)
+      expect(backdropFilter).toContain('blur(24px)')
+    }
+
     // Ensure no theme toggle button is rendered
     await expect(page.getByTestId('theme-toggle')).toHaveCount(0)
 
