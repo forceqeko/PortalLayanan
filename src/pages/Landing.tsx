@@ -664,7 +664,7 @@ export function LandingPage() {
             <div
               role="group"
               aria-label="Pilih Wilayah Layanan Kepulauan"
-              className="mt-2.5 grid w-full grid-cols-1 gap-2.5 sm:grid-cols-3 sm:gap-4"
+              className="mt-2.5 grid w-full grid-cols-3 gap-2 sm:gap-4"
             >
               {ISLAND_SITES.map((item) => {
                 const active = item.key === site
@@ -675,31 +675,31 @@ export function LandingPage() {
                     data-testid={`site-switch-${item.key}`}
                     aria-pressed={active}
                     onClick={() => switchSite(item.key as SiteKey)}
-                    className={`group flex min-h-[58px] w-full items-center justify-between gap-3 rounded-2xl border p-2.5 pr-3.5 text-left backdrop-blur-md transition sm:min-h-[62px] sm:p-2.5 sm:pr-4 active:scale-95 ${
+                    className={`group flex min-h-[48px] w-full items-center justify-between gap-1 rounded-2xl border px-2.5 py-2 text-left backdrop-blur-md transition sm:min-h-[62px] sm:gap-3 sm:p-2.5 sm:pr-4 active:scale-95 ${
                       active
                         ? 'border-sky-400 bg-slate-900/75 text-white shadow-[0_0_20px_rgba(56,189,248,0.4)] ring-2 ring-sky-400/50'
                         : 'border-white/20 bg-slate-900/55 text-white hover:border-white/40 hover:bg-slate-900/75 shadow-sm'
                     }`}
                   >
-                    <div className="flex min-w-0 items-center gap-3">
+                    <div className="flex min-w-0 items-center gap-2 sm:gap-3">
                       <img
                         src={item.heroAsset}
                         alt=""
                         aria-hidden="true"
-                        className="h-10 w-14 shrink-0 rounded-xl object-cover ring-1 ring-white/15 sm:h-11 sm:w-16"
+                        className="hidden h-11 w-16 shrink-0 rounded-xl object-cover ring-1 ring-white/15 sm:block"
                       />
                       <div className="min-w-0">
-                        <div className="flex items-center gap-2">
-                          <span className="block truncate text-sm font-bold tracking-tight text-white">
+                        <div className="flex items-center gap-1.5 sm:gap-2">
+                          <span className="block truncate text-[11px] font-bold tracking-tight text-white sm:text-sm">
                             {item.shortLabel}
                           </span>
                           {active && (
-                            <span className="inline-flex items-center rounded-full bg-sky-500/20 px-2 py-0.5 text-[10px] font-bold text-sky-300 ring-1 ring-sky-400/30">
+                            <span className="hidden items-center rounded-full bg-sky-500/20 px-2 py-0.5 text-[10px] font-bold text-sky-300 ring-1 ring-sky-400/30 sm:inline-flex">
                               Aktif
                             </span>
                           )}
                         </div>
-                        <span className="block truncate text-[11px] text-white/75">
+                        <span className="hidden truncate text-[11px] text-white/75 sm:block">
                           {item.metadata.regionName}
                         </span>
                       </div>
@@ -707,7 +707,7 @@ export function LandingPage() {
 
                     <span
                       aria-hidden="true"
-                      className={`inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-bold transition ${
+                      className={`inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[10px] font-bold transition sm:h-7 sm:w-7 sm:text-xs ${
                         active
                           ? 'bg-sky-500 text-white shadow-md'
                           : 'bg-white/10 text-white/75 group-hover:bg-white/20 group-hover:text-white'
