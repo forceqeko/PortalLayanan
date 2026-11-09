@@ -298,21 +298,33 @@ export function InformationPage() {
                     data-testid={`info-card-${item.slug}`}
                     className="group flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-xs transition duration-200 hover:-translate-y-1 hover:border-sky-400 hover:shadow-md"
                   >
-                    {/* Card Thumbnail Image & SVG Media Badges */}
+                    {/* Card Thumbnail Image (Adaptive Portrait & Landscape without cropping posters) */}
                     <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-900">
+                      {/* Ambient blurred backdrop so portrait images fill the frame gracefully */}
+                      <img
+                        src={resolvePublicAsset(
+                          item.mediaUrl || 'hero/sulut.jpg',
+                        )}
+                        alt=""
+                        aria-hidden="true"
+                        className="pointer-events-none absolute inset-0 h-full w-full scale-110 object-cover opacity-35 blur-xl"
+                        loading="lazy"
+                      />
+
+                      {/* Foreground image preserving full portrait or landscape proportions */}
                       <img
                         src={resolvePublicAsset(
                           item.mediaUrl || 'hero/sulut.jpg',
                         )}
                         alt={item.title}
-                        className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
+                        className="relative z-10 h-full w-full object-contain transition duration-300 group-hover:scale-[1.03]"
                         loading="lazy"
                       />
 
-                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent opacity-80" />
+                      <div className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-t from-slate-950/50 via-transparent to-transparent opacity-80" />
 
                       {/* Top Left Media Type Badge (SVG, Zero Emoji) */}
-                      <div className="absolute top-2.5 left-2.5 flex items-center gap-1.5">
+                      <div className="absolute top-2.5 left-2.5 z-30 flex items-center gap-1.5">
                         <span className="inline-flex items-center gap-1.5 rounded-lg bg-slate-900/85 px-2.5 py-1 text-[11px] font-bold text-white ring-1 ring-white/15 backdrop-blur-md">
                           {item.videoUrl ? (
                             <>
@@ -336,7 +348,7 @@ export function InformationPage() {
                       </div>
 
                       {/* Bottom Right Reading Time Badge */}
-                      <div className="absolute bottom-2.5 right-2.5 inline-flex items-center gap-1 rounded-md bg-slate-900/80 px-2 py-0.5 text-[10px] font-semibold text-slate-100">
+                      <div className="absolute bottom-2.5 right-2.5 z-30 inline-flex items-center gap-1 rounded-md bg-slate-900/80 px-2 py-0.5 text-[10px] font-semibold text-slate-100">
                         <Clock className="h-2.5 w-2.5" />
                         <span>{estimateReadingMinutes(item)} mnt baca</span>
                       </div>

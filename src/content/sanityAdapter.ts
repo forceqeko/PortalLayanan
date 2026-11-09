@@ -21,7 +21,7 @@ export const SANITY_PUBLISHED_GROQ_QUERY = `*[_type == "karantinaContent" && !(_
   "siteScope": coalesce(siteScope, "GLOBAL"),
   "contentType": coalesce(contentType, category, "article"),
   "status": coalesce(status, "PUBLISHED"),
-  "mediaUrl": coalesce(mediaImage.asset->url + "?auto=format&fit=max&w=1200&q=80", mediaUrl),
+  "mediaUrl": coalesce(mediaImage.asset->url + "?auto=format&fit=max&w=1600&q=85", mediaUrl),
   "videoUrl": coalesce(videoFile.asset->url, videoUrl),
   "documentUrl": coalesce(documentFile.asset->url, documentUrl),
   "publishAt": coalesce(publishAt, _createdAt),
@@ -129,7 +129,7 @@ export function transformSanityResponseToProjection(
           typeof item.mediaUrl === 'string' && item.mediaUrl.trim()
             ? item.mediaUrl.trim()
             : mediaAssetUrl
-              ? `${mediaAssetUrl}?auto=format&fit=max&w=1200&q=80`
+              ? `${mediaAssetUrl}?auto=format&fit=max&w=1600&q=85`
               : null,
         videoUrl:
           typeof item.videoUrl === 'string' && item.videoUrl.trim()

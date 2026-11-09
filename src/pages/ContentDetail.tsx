@@ -234,20 +234,24 @@ export function ContentDetailPage() {
                 {item.summary}
               </div>
 
-              {/* MULTIMEDIA DISPLAY: Video Player or Photo Showcase (SVG Icons, Zero Emoji) */}
+              {/* MULTIMEDIA DISPLAY: Flexible Portrait & Landscape Video / Photo Showcase */}
               {item.videoUrl && (
                 <div className="mt-6 overflow-hidden rounded-2xl border border-slate-200 bg-slate-950 shadow-sm">
-                  <video
-                    controls
-                    preload="metadata"
-                    poster={resolvePublicAsset(
-                      item.mediaUrl || 'hero/sulut.jpg',
-                    )}
-                    className="w-full aspect-video object-cover"
-                  >
-                    <source src={item.videoUrl} type="video/mp4" />
-                    Peramban Anda tidak mendukung pemutar video HTML5.
-                  </video>
+                  <div className="flex items-center justify-center bg-slate-950">
+                    <video
+                      controls
+                      preload="metadata"
+                      poster={
+                        item.mediaUrl
+                          ? resolvePublicAsset(item.mediaUrl)
+                          : undefined
+                      }
+                      className="block h-auto max-h-[80dvh] w-auto max-w-full object-contain mx-auto"
+                    >
+                      <source src={item.videoUrl} type="video/mp4" />
+                      Peramban Anda tidak mendukung pemutar video HTML5.
+                    </video>
+                  </div>
                   <div className="p-3 bg-slate-100 text-xs font-semibold text-slate-800 flex items-center gap-2 border-t border-slate-200">
                     <Film className="h-4 w-4 text-sky-700 shrink-0" />
                     <span>Video Dokumentasi & Edukasi Karantina</span>
@@ -256,12 +260,14 @@ export function ContentDetailPage() {
               )}
 
               {item.mediaUrl && !item.videoUrl && (
-                <div className="mt-6 overflow-hidden rounded-2xl border border-slate-200 shadow-xs">
-                  <img
-                    src={resolvePublicAsset(item.mediaUrl)}
-                    alt={item.title}
-                    className="w-full max-h-[480px] object-cover"
-                  />
+                <div className="mt-6 overflow-hidden rounded-2xl border border-slate-200 bg-slate-900/5 shadow-xs">
+                  <div className="flex items-center justify-center bg-slate-100/80 p-2 sm:p-4">
+                    <img
+                      src={resolvePublicAsset(item.mediaUrl)}
+                      alt={item.title}
+                      className="block h-auto max-h-[85dvh] w-auto max-w-full rounded-xl object-contain mx-auto shadow-xs"
+                    />
+                  </div>
                   <div className="p-3 bg-slate-100 text-[11px] text-slate-700 flex flex-wrap items-center justify-between gap-2 border-t border-slate-200">
                     <span className="inline-flex items-center gap-1.5 font-semibold">
                       <ImageIcon className="h-3.5 w-3.5 text-sky-700" />
@@ -269,6 +275,15 @@ export function ContentDetailPage() {
                         Dokumentasi Kegiatan Balai Karantina Sulawesi Utara
                       </span>
                     </span>
+                    <a
+                      href={resolvePublicAsset(item.mediaUrl)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 font-bold text-sky-700 hover:text-sky-900"
+                    >
+                      <span>Buka Ukuran Penuh</span>
+                      <ExternalLink className="h-3 w-3" />
+                    </a>
                   </div>
                 </div>
               )}
