@@ -1,39 +1,23 @@
 import { useMemo, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import {
+  Calendar,
   Clock,
   ExternalLink,
   FileText,
   Film,
   Image as ImageIcon,
-  MapPin,
   MessageCircle,
   RotateCcw,
   Search,
   X,
 } from 'lucide-react'
-import { SITE_CONFIGS, type SiteKey, ALLOWED_SITES } from '../config/sites'
+import { type SiteKey, ALLOWED_SITES } from '../config/sites'
 import { usePublishedContent } from '../content/useContent'
-import { selectContentForSite } from '../content/selectors'
+import { selectUniversalContent } from '../content/selectors'
 import type { PublishedContentItem } from '../content/contract'
 import { getSafeServiceUrl } from '../config/services'
 import { resolvePublicAsset } from '../config/env'
-
-type FilterTabId = 'all' | 'announcement' | 'service' | 'article' | 'faq' | 'video'
-
-const CATEGORY_LABELS: Record<string, string> = {
-  announcement: 'Pengumuman',
-  service: 'Panduan Layanan',
-  article: 'Kegiatan & Artikel',
-  faq: 'Tanya Jawab',
-  document: 'Dokumen Resmi',
-  media: 'Dokumentasi Visual',
-}
-
-function formatCategoryLabel(rawCategory: string): string {
-  const key = rawCategory.trim().toLowerCase()
-  return CATEGORY_LABELS[key] || rawCategory.toUpperCase()
-}
 
 function formatIndonesianDate(isoString: string): string {
   try {
@@ -55,86 +39,48 @@ function estimateReadingMinutes(item: PublishedContentItem): number {
 }
 
 export function InformationPage() {
-  const [searchParams, setSearchParams] = useSearchParams()
+  const [searchParams] = useSearchParams()
   const rawSite = searchParams.get('site') || 'sulut'
   const site: SiteKey = (ALLOWED_SITES as readonly string[]).includes(rawSite)
     ? (rawSite as SiteKey)
     : 'sulut'
 
-  const [activeTab, setActiveTab] = useState<FilterTabId>('all')
   const [searchQuery, setSearchQuery] = useState('')
 
-  const siteConfig = useMemo(() => SITE_CONFIGS[site], [site])
   const { data, isLoading, isError, refetch } = usePublishedContent()
 
   const waUrl = getSafeServiceUrl('whatsapp', site)
   const ptkUrl = getSafeServiceUrl('ptk', site)
 
-  const handleSiteChange = (nextSite: SiteKey) => {
-    const nextParams = new URLSearchParams(searchParams)
-    nextParams.set('site', nextSite)
-    setSearchParams(nextParams)
-  }
-
-  // Filter items scoped to this island, with fallback to global
-  const siteScopedItems = useMemo(() => {
+  // Universal published items (equal hierarchy, no category or island division)
+  const universalItems = useMemo(() => {
     const allItems = data?.items ?? []
-    return selectContentForSite(allItems, site)
-  }, [data, site])
+    return selectUniversalContent(allItems)
+  }, [data])
 
-  // Filter counts per category tab
-  const tabCounts = useMemo(() => {
-    return {
-      all: siteScopedItems.length,
-      announcement: siteScopedItems.filter((i) => i.category === 'announcement')
-        .length,
-      service: siteScopedItems.filter((i) => i.category === 'service').length,
-      article: siteScopedItems.filter((i) => i.category === 'article').length,
-      faq: siteScopedItems.filter((i) => i.category === 'faq').length,
-      video: siteScopedItems.filter((i) => Boolean(i.videoUrl)).length,
-    }
-  }, [siteScopedItems])
-
-  // Items filtered by active category tab and search query
+  // Items filtered by search query
   const filteredItems = useMemo(() => {
     const q = searchQuery.trim().toLowerCase()
-    return siteScopedItems.filter((item) => {
-      const matchesTab =
-        activeTab === 'all'
-          ? true
-          : activeTab === 'video'
-            ? Boolean(item.videoUrl)
-            : item.category === activeTab
+    if (!q) return universalItems
 
-      if (!matchesTab) return false
-      if (!q) return true
-
-      const tokens = q.split(/\s+/).filter(Boolean)
+    const tokens = q.split(/\s+/).filter(Boolean)
+    return universalItems.filter((item) => {
       const haystack =
-        `${item.title} ${item.slug} ${item.slug.replace(/-/g, ' ')} ${item.summary} ${item.body || ''} ${item.category} ${item.siteScope}`.toLowerCase()
+        `${item.title} ${item.slug} ${item.slug.replace(/-/g, ' ')} ${item.summary} ${item.body || ''}`.toLowerCase()
       return tokens.every((token) => haystack.includes(token))
     })
-  }, [siteScopedItems, activeTab, searchQuery])
+  }, [universalItems, searchQuery])
 
-  const filterTabs: { id: FilterTabId; label: string; count: number }[] = [
-    { id: 'all', label: 'Semua Informasi', count: tabCounts.all },
-    { id: 'announcement', label: 'Pengumuman', count: tabCounts.announcement },
-    { id: 'service', label: 'Panduan Layanan', count: tabCounts.service },
-    { id: 'article', label: 'Kegiatan & Artikel', count: tabCounts.article },
-    { id: 'faq', label: 'Tanya Jawab', count: tabCounts.faq },
-    { id: 'video', label: 'Galeri Video', count: tabCounts.video },
-  ]
-
-  const isFilteringActive = activeTab !== 'all' || searchQuery.trim().length > 0
+  const isSearching = searchQuery.trim().length > 0
 
   return (
     <div
       data-testid="information-page"
       className="min-h-dvh bg-[#f8fafc] font-sans text-slate-900"
     >
-      {/* 1. Sticky Editorial Top Header */}
+      {/* 1. Sticky Editorial Top Header (Universal, Clean) */}
       <header className="sticky top-0 z-40 border-b border-slate-200/90 bg-white/95 backdrop-blur-md">
-        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
           <Link
             to={`/?site=${site}`}
             className="group flex items-center gap-3"
@@ -155,99 +101,34 @@ export function InformationPage() {
             </div>
           </Link>
 
-          <div className="flex flex-wrap items-center gap-2 sm:gap-3">
-            {/* In-Page Quick Location Switcher */}
-            <div
-              role="group"
-              aria-label="Pilih Wilayah Layanan"
-              className="hidden md:inline-flex items-center rounded-xl border border-slate-200 bg-slate-100/80 p-1"
-            >
-              {ALLOWED_SITES.map((siteKey) => {
-                const active = siteKey === site
-                const cfg = SITE_CONFIGS[siteKey]
-                return (
-                  <button
-                    key={siteKey}
-                    type="button"
-                    data-testid={`info-site-switch-${siteKey}`}
-                    onClick={() => handleSiteChange(siteKey)}
-                    className={`min-h-[36px] rounded-lg px-3 py-1.5 text-xs font-bold transition ${
-                      active
-                        ? 'bg-slate-900 text-white shadow-xs'
-                        : 'text-slate-600 hover:text-slate-900'
-                    }`}
-                  >
-                    {cfg.shortLabel}
-                  </button>
-                )
-              })}
-            </div>
-
-            <Link
-              to={`/?site=${site}`}
-              data-testid="back-to-landing"
-              className="inline-flex min-h-[44px] items-center gap-2 rounded-xl border border-slate-300 bg-white px-4 py-2 text-xs font-bold text-slate-800 transition hover:border-slate-400 hover:bg-slate-50 active:scale-95"
-            >
-              <span aria-hidden="true">←</span>
-              <span>Kembali ke Gerbang Layanan</span>
-            </Link>
-          </div>
+          <Link
+            to={`/?site=${site}`}
+            data-testid="back-to-landing"
+            className="inline-flex min-h-[44px] items-center gap-2 rounded-xl border border-slate-300 bg-white px-4 py-2 text-xs font-bold text-slate-800 transition hover:border-slate-400 hover:bg-slate-50 active:scale-95"
+          >
+            <span aria-hidden="true">←</span>
+            <span>Kembali ke Gerbang Layanan</span>
+          </Link>
         </div>
       </header>
 
-      {/* 2. Modern Editorial Masthead & Live Filter Bar */}
-      <section className="relative overflow-hidden border-b border-slate-200 bg-white pt-8 pb-6 sm:pt-10 sm:pb-8">
+      {/* 2. Universal Editorial Masthead & Search Bar */}
+      <section className="relative overflow-hidden border-b border-slate-200 bg-white py-8 sm:py-10">
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          {/* Editorial Meta Strip */}
-          <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 pb-4 text-xs">
-            <div className="flex flex-wrap items-center gap-2 text-slate-600 font-semibold">
-              <span className="inline-flex items-center gap-1.5 rounded-md bg-sky-50 px-2.5 py-1 text-sky-800 font-bold ring-1 ring-sky-200">
-                <MapPin className="h-3.5 w-3.5 text-sky-700" />
-                <span>Wilayah Aktif: {siteConfig.label}</span>
-              </span>
-              <span className="text-slate-300" aria-hidden="true">
-                |
-              </span>
-              <span>{siteConfig.metadata.regionName}</span>
-            </div>
-
-            {/* Mobile Location Selector */}
-            <div className="flex md:hidden items-center gap-1.5 overflow-x-auto py-1">
-              {ALLOWED_SITES.map((siteKey) => {
-                const active = siteKey === site
-                return (
-                  <button
-                    key={siteKey}
-                    type="button"
-                    onClick={() => handleSiteChange(siteKey)}
-                    className={`min-h-[36px] rounded-lg px-2.5 py-1 text-[11px] font-bold transition ${
-                      active
-                        ? 'bg-slate-900 text-white'
-                        : 'bg-slate-100 text-slate-700'
-                    }`}
-                  >
-                    {SITE_CONFIGS[siteKey].shortLabel}
-                  </button>
-                )
-              })}
-            </div>
-          </div>
-
-          {/* Masthead Title & Search Input Grid */}
-          <div className="mt-6 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:items-end">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:items-end">
             <div className="lg:col-span-7">
               <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight text-slate-900 leading-[1.12]">
                 Pusat Informasi, Edukasi & Galeri Karantina
               </h1>
               <p className="mt-3 max-w-2xl text-sm sm:text-base leading-relaxed text-slate-600">
-                Akses pengumuman resmi pelabuhan, panduan sertifikasi PTK Online, serta dokumentasi pengawasan karantina hewan, ikan, dan tumbuhan di wilayah kepulauan Sulawesi Utara.
+                Akses informasi resmi, panduan permohonan sertifikasi PTK Online, serta dokumentasi kegiatan karantina hewan, ikan, dan tumbuhan Sulawesi Utara.
               </p>
             </div>
 
             {/* Live Instant Search Box */}
             <div className="lg:col-span-5">
               <label htmlFor="info-search" className="sr-only">
-                Cari informasi atau pengumuman karantina
+                Cari informasi atau dokumentasi karantina
               </label>
               <div className="relative flex items-center">
                 <Search className="pointer-events-none absolute left-3.5 h-4 w-4 text-slate-400" />
@@ -257,7 +138,7 @@ export function InformationPage() {
                   data-testid="info-search-input"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Cari pengumuman, jadwal pelabuhan, atau panduan..."
+                  placeholder="Cari informasi, panduan, atau dokumentasi..."
                   className="min-h-[46px] w-full rounded-xl border border-slate-300 bg-slate-50/80 pl-10 pr-10 py-2.5 text-xs sm:text-sm font-medium text-slate-900 placeholder:text-slate-400 transition focus:border-sky-600 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-600/20"
                 />
                 {searchQuery && (
@@ -274,47 +155,10 @@ export function InformationPage() {
               </div>
             </div>
           </div>
-
-          {/* Interactive Category Pill Tabs */}
-          <div
-            role="tablist"
-            aria-label="Filter Kategori Informasi"
-            className="mt-6 flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar"
-          >
-            {filterTabs.map((tab) => {
-              const isActive = activeTab === tab.id
-              return (
-                <button
-                  key={tab.id}
-                  type="button"
-                  role="tab"
-                  aria-selected={isActive}
-                  data-testid={`info-filter-${tab.id}`}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`inline-flex min-h-[42px] shrink-0 items-center gap-2 rounded-xl px-3.5 py-2 text-xs font-bold transition ${
-                    isActive
-                      ? 'bg-sky-700 text-white shadow-xs'
-                      : 'border border-slate-200 bg-slate-50 text-slate-700 hover:border-slate-300 hover:bg-slate-100'
-                  }`}
-                >
-                  <span>{tab.label}</span>
-                  <span
-                    className={`rounded-md px-1.5 py-0.5 text-[10px] font-extrabold ${
-                      isActive
-                        ? 'bg-sky-900/60 text-sky-100'
-                        : 'bg-slate-200/80 text-slate-700'
-                    }`}
-                  >
-                    {tab.count}
-                  </span>
-                </button>
-              )
-            })}
-          </div>
         </div>
       </section>
 
-      {/* Main Content Stage: Single Unified Card Hierarchy */}
+      {/* Main Content Stage: Universal Single-Type Card Grid */}
       <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
         {/* Loading State */}
         {isLoading && (
@@ -343,7 +187,7 @@ export function InformationPage() {
               Gagal Memuat Daftar Informasi Terbaru
             </h2>
             <p className="mt-1.5 text-xs sm:text-sm text-slate-600 max-w-md mx-auto">
-              Terjadi kendala jaringan saat mengambil pembaruan berita. Layanan utama PTK Online dan konsultasi WhatsApp tetap beroperasi penuh.
+              Terjadi kendala jaringan saat mengambil pembaruan informasi. Layanan utama PTK Online dan konsultasi WhatsApp tetap beroperasi penuh.
             </p>
 
             <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
@@ -377,7 +221,7 @@ export function InformationPage() {
         )}
 
         {/* Empty State when dataset has zero items */}
-        {!isLoading && !isError && siteScopedItems.length === 0 && (
+        {!isLoading && !isError && universalItems.length === 0 && (
           <div
             data-testid="information-empty-state"
             className="rounded-3xl border border-slate-200 bg-white p-12 text-center shadow-xs"
@@ -386,25 +230,20 @@ export function InformationPage() {
               Belum Ada Dokumentasi Publik
             </p>
             <p className="mt-1 text-xs text-slate-600">
-              Dokumentasi informasi dan rilis karantina wilayah sedang dipersiapkan.
+              Dokumentasi informasi dan rilis karantina sedang dipersiapkan.
             </p>
           </div>
         )}
 
-        {/* UNIFIED NEWS & DOCUMENTATION CARDS GRID (Equal Hierarchy for All Items) */}
-        {!isLoading && !isError && siteScopedItems.length > 0 && (
+        {/* UNIVERSAL INFORMATION CARDS GRID */}
+        {!isLoading && !isError && universalItems.length > 0 && (
           <section aria-label="Daftar Rilis dan Dokumentasi">
             <div className="flex flex-wrap items-center justify-between gap-3 mb-6 border-b border-slate-200 pb-3">
               <div>
                 <h2 className="text-base sm:text-xl font-black text-slate-900">
-                  {activeTab === 'all'
-                    ? 'Daftar Rilis & Informasi Karantina'
-                    : `Kategori: ${
-                        filterTabs.find((t) => t.id === activeTab)?.label
-                      }`}{' '}
-                  ({filteredItems.length})
+                  Daftar Rilis & Informasi Karantina ({filteredItems.length})
                 </h2>
-                {searchQuery.trim() && (
+                {isSearching && (
                   <p className="text-xs text-slate-600 mt-0.5">
                     Menampilkan hasil pencarian untuk kata kunci{' '}
                     <span className="font-bold text-slate-900">
@@ -414,49 +253,38 @@ export function InformationPage() {
                 )}
               </div>
 
-              <div className="flex items-center gap-3">
-                {isFilteringActive && (
-                  <button
-                    type="button"
-                    data-testid="info-reset-filter"
-                    onClick={() => {
-                      setActiveTab('all')
-                      setSearchQuery('')
-                    }}
-                    className="inline-flex min-h-[38px] items-center gap-1.5 rounded-xl border border-slate-300 bg-white px-3 py-1.5 text-xs font-bold text-slate-700 hover:bg-slate-100 transition"
-                  >
-                    <RotateCcw className="h-3.5 w-3.5" />
-                    <span>Reset Filter</span>
-                  </button>
-                )}
-                <span className="text-xs text-sky-800 font-bold">
-                  Pos Layanan: {siteConfig.label}
-                </span>
-              </div>
+              {isSearching && (
+                <button
+                  type="button"
+                  data-testid="info-reset-filter"
+                  onClick={() => setSearchQuery('')}
+                  className="inline-flex min-h-[38px] items-center gap-1.5 rounded-xl border border-slate-300 bg-white px-3 py-1.5 text-xs font-bold text-slate-700 hover:bg-slate-100 transition"
+                >
+                  <RotateCcw className="h-3.5 w-3.5" />
+                  <span>Reset Pencarian</span>
+                </button>
+              )}
             </div>
 
-            {/* Zero Filter Match State */}
+            {/* Zero Search Match State */}
             {filteredItems.length === 0 ? (
               <div
                 data-testid="information-no-filter-match"
                 className="rounded-3xl border border-slate-200 bg-white p-10 text-center"
               >
                 <p className="text-base font-extrabold text-slate-900">
-                  Tidak Ditemukan Informasi yang Sesuai Filter
+                  Tidak Ditemukan Informasi yang Sesuai Pencarian
                 </p>
                 <p className="mt-1 text-xs sm:text-sm text-slate-600 max-w-md mx-auto">
-                  Coba gunakan kata kunci lain atau kembalikan tab kategori ke Semua Informasi.
+                  Coba gunakan kata kunci lain untuk menemukan informasi yang Anda cari.
                 </p>
                 <button
                   type="button"
-                  onClick={() => {
-                    setActiveTab('all')
-                    setSearchQuery('')
-                  }}
+                  onClick={() => setSearchQuery('')}
                   className="mt-4 inline-flex min-h-[44px] items-center gap-2 rounded-xl bg-sky-700 px-5 py-2.5 text-xs font-extrabold text-white hover:bg-sky-800 transition"
                 >
                   <RotateCcw className="h-4 w-4" />
-                  <span>Tampilkan Semua Informasi ({siteScopedItems.length})</span>
+                  <span>Tampilkan Semua Informasi ({universalItems.length})</span>
                 </button>
               </div>
             ) : (
@@ -507,11 +335,6 @@ export function InformationPage() {
                         )}
                       </div>
 
-                      {/* Bottom Left Scope Badge */}
-                      <div className="absolute bottom-2.5 left-2.5 rounded-md bg-white/95 px-2 py-0.5 text-[10px] font-mono font-bold text-slate-900 ring-1 ring-slate-200">
-                        {item.siteScope === 'GLOBAL' ? 'SULUT' : item.siteScope}
-                      </div>
-
                       {/* Bottom Right Reading Time Badge */}
                       <div className="absolute bottom-2.5 right-2.5 inline-flex items-center gap-1 rounded-md bg-slate-900/80 px-2 py-0.5 text-[10px] font-semibold text-slate-100">
                         <Clock className="h-2.5 w-2.5" />
@@ -522,10 +345,8 @@ export function InformationPage() {
                     {/* Card Content Area */}
                     <div className="flex flex-1 flex-col justify-between p-5">
                       <div>
-                        <div className="flex items-center justify-between gap-2 text-[11px] text-slate-500">
-                          <span className="font-extrabold uppercase tracking-wider text-sky-700">
-                            {formatCategoryLabel(item.category)}
-                          </span>
+                        <div className="flex items-center gap-1.5 text-[11px] font-medium text-slate-500">
+                          <Calendar className="h-3.5 w-3.5 text-sky-700" />
                           <span className="font-mono">
                             {formatIndonesianDate(item.updatedAt)}
                           </span>

@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test'
 
-test.describe('Content Projection, Site Scope & Draft Protection (UAT-11, UAT-12, FR-008)', () => {
+test.describe('Universal Content Projection & Draft Protection (UAT-11, FR-012)', () => {
   test('UAT-11 / FR-012: Non-published (DRAFT) items are never visible in public portal', async ({
     page,
   }) => {
@@ -17,31 +17,27 @@ test.describe('Content Projection, Site Scope & Draft Protection (UAT-11, UAT-12
     await expect(page.getByTestId('content-detail-not-found')).toBeVisible()
   })
 
-  test('UAT-12 / FR-007 & FR-008: Site-scoped content prioritizes local items and includes GLOBAL fallback', async ({
+  test('Universal Content Feed: All published items are displayed universally with equal hierarchy', async ({
     page,
   }) => {
     await page.goto('/informasi?site=siau')
     await expect(page.getByTestId('information-cards-grid')).toBeVisible()
 
-    // Local Siau item is visible
+    // Universal feed shows all published items regardless of site parameter
     await expect(
       page.getByTestId('info-card-jadwal-layanan-pelabuhan-ulow-ondong-siau'),
     ).toBeVisible()
-
-    // Global item is also visible as fallback/general info
     await expect(
       page.getByTestId('info-card-penguatan-akses-digital-kepulauan-sulut'),
     ).toBeVisible()
-
-    // Tahuna-only item is NOT shown when site=siau
     await expect(
       page.getByTestId(
         'info-card-pelayanan-sertifikasi-komoditas-pelabuhan-tahuna',
       ),
-    ).toHaveCount(0)
+    ).toBeVisible()
   })
 
-  test('Phase 4A: Card 3 opens Full Page Information & Multimedia Hub with video, photo, category filters, and detail article', async ({
+  test('Phase 4A: Card 3 opens Universal Information Hub with live search and detail article', async ({
     page,
   }) => {
     await page.goto('/?site=siau')
@@ -55,30 +51,22 @@ test.describe('Content Projection, Site Scope & Draft Protection (UAT-11, UAT-12
       page.getByTestId('info-card-draft-internal-belum-dipublikasikan'),
     ).toHaveCount(0)
 
-    // 3. Local Siau announcement item is visible
+    // 3. Published items are visible in the unified feed
     await expect(
       page.getByTestId('info-card-jadwal-layanan-pelabuhan-ulow-ondong-siau'),
     ).toBeVisible()
-
-    // 4. Service guide item is directly visible in the unified feed
     await expect(
       page.getByTestId('info-card-panduan-permohonan-ptk-online'),
     ).toBeVisible()
 
-    // 5. Test interactive category filter & live search on Information Page
-    await page.getByTestId('info-filter-service').click()
-    await expect(
-      page.getByTestId('info-card-panduan-permohonan-ptk-online'),
-    ).toBeVisible()
-    await page.getByTestId('info-filter-all').click()
-
+    // 4. Test live search on Information Page
     await page.getByTestId('info-search-input').fill('Ulow Ondong')
     await expect(
       page.getByTestId('info-card-jadwal-layanan-pelabuhan-ulow-ondong-siau'),
     ).toBeVisible()
     await page.getByTestId('info-search-clear').click()
 
-    // 6. Click read more opens ContentDetail page with rich media, share actions, & related articles
+    // 5. Click read more opens ContentDetail page with rich media, share actions, & related articles
     await page
       .getByTestId('read-more-panduan-permohonan-ptk-online')
       .click()
@@ -90,12 +78,12 @@ test.describe('Content Projection, Site Scope & Draft Protection (UAT-11, UAT-12
     await expect(page.getByTestId('copy-link-btn')).toBeVisible()
     await expect(page.getByTestId('related-articles-section')).toBeVisible()
 
-    // 7. Back button returns to landing
+    // 6. Back button returns to landing
     await page.getByTestId('back-to-landing').click()
     await expect(page.getByTestId('hero-section')).toBeVisible()
   })
 
-  test('Phase 4B (Sanity CMS Adapter): Transforms Sanity response, blocks drafts.*, and renders video + PDF attachment', async ({
+  test('Phase 4B (Sanity CMS Adapter): Transforms universal Sanity response, blocks drafts.*, and renders video + PDF attachment', async ({
     page,
   }) => {
     await page.route('**/content/sample.json', async (route) => {
@@ -110,10 +98,9 @@ test.describe('Content Projection, Site Scope & Draft Protection (UAT-11, UAT-12
               _updatedAt: '2026-10-20T08:30:00Z',
               title: 'Rilis Resmi Sanity CMS BKHIT Sulawesi Utara',
               slug: { current: 'rilis-resmi-sanity-cms-bkhit' },
-              summary: 'Pengumuman resmi dengan lampiran video MP4 dan dokumen PDF.',
+              summary:
+                'Pengumuman resmi dengan lampiran video MP4 dan dokumen PDF.',
               body: 'Paragraf pertama rincian informasi.\n\nParagraf kedua rincian informasi.',
-              category: 'announcement',
-              siteScope: 'GLOBAL',
               status: 'PUBLISHED',
               mediaImage: {
                 asset: { url: '/hero/sulut.jpg' },
@@ -132,8 +119,6 @@ test.describe('Content Projection, Site Scope & Draft Protection (UAT-11, UAT-12
               title: 'DRAF INTERNAL SANITY',
               slug: { current: 'draf-internal-sanity' },
               summary: 'Tidak boleh tampil di publik.',
-              category: 'announcement',
-              siteScope: 'GLOBAL',
               status: 'PUBLISHED',
             },
           ],
@@ -141,7 +126,7 @@ test.describe('Content Projection, Site Scope & Draft Protection (UAT-11, UAT-12
       })
     })
 
-    await page.goto('/informasi?site=sulut')
+    await page.goto('/informasi')
     await expect(
       page.getByTestId('info-card-rilis-resmi-sanity-cms-bkhit'),
     ).toBeVisible()
@@ -156,4 +141,3 @@ test.describe('Content Projection, Site Scope & Draft Protection (UAT-11, UAT-12
     await expect(page.getByTestId('content-detail-document')).toBeVisible()
   })
 })
-

@@ -9,30 +9,15 @@ import {
   FileText,
   Film,
   Image as ImageIcon,
-  MapPin,
   MessageCircle,
   Share2,
 } from 'lucide-react'
-import { ALLOWED_SITES, SITE_CONFIGS, type SiteKey } from '../config/sites'
+import { ALLOWED_SITES, type SiteKey } from '../config/sites'
 import { usePublishedContent } from '../content/useContent'
-import { isPubliclyVisible, selectContentForSite } from '../content/selectors'
+import { isPubliclyVisible, selectUniversalContent } from '../content/selectors'
 import type { PublishedContentItem } from '../content/contract'
 import { getSafeServiceUrl } from '../config/services'
 import { resolvePublicAsset } from '../config/env'
-
-const CATEGORY_LABELS: Record<string, string> = {
-  announcement: 'Pengumuman Resmi',
-  service: 'Panduan Layanan',
-  article: 'Kegiatan & Artikel',
-  faq: 'Tanya Jawab',
-  document: 'Dokumen Resmi',
-  media: 'Dokumentasi Visual',
-}
-
-function formatCategoryLabel(rawCategory: string): string {
-  const key = rawCategory.trim().toLowerCase()
-  return CATEGORY_LABELS[key] || rawCategory.toUpperCase()
-}
 
 function formatIndonesianDate(isoString: string): string {
   try {
@@ -63,7 +48,6 @@ export function ContentDetailPage() {
 
   const [copied, setCopied] = useState(false)
 
-  const siteConfig = SITE_CONFIGS[site]
   const { data, isLoading, isError } = usePublishedContent()
 
   const item: PublishedContentItem | undefined = useMemo(() => {
@@ -75,10 +59,10 @@ export function ContentDetailPage() {
 
   const relatedItems = useMemo(() => {
     if (!data?.items || !item) return []
-    return selectContentForSite(data.items, site)
+    return selectUniversalContent(data.items)
       .filter((candidate) => candidate.id !== item.id)
       .slice(0, 3)
-  }, [data, item, site])
+  }, [data, item])
 
   const ptkUrl = getSafeServiceUrl('ptk', site)
   const waUrl = getSafeServiceUrl('whatsapp', site)
@@ -86,7 +70,7 @@ export function ContentDetailPage() {
   const shareUrl =
     typeof window !== 'undefined'
       ? window.location.href
-      : `https://bkhit-sulut.karantinaindonesia.go.id/konten/${slug ?? ''}?site=${site}`
+      : `https://bkhit-sulut.karantinaindonesia.go.id/konten/${slug ?? ''}`
 
   const whatsappShareHref = item
     ? `https://wa.me/?text=${encodeURIComponent(
@@ -124,7 +108,7 @@ export function ContentDetailPage() {
             to={`/informasi?site=${site}`}
             className="inline-flex min-h-[44px] items-center gap-1.5 rounded-xl border border-sky-300 bg-sky-50 px-4 py-2 text-xs font-bold text-sky-800 transition hover:bg-sky-100 active:scale-95"
           >
-            <span>Semua Informasi ({siteConfig.shortLabel})</span>
+            <span>Semua Informasi</span>
             <span aria-hidden="true">→</span>
           </Link>
         </div>
@@ -193,23 +177,11 @@ export function ContentDetailPage() {
               data-testid="content-detail-article"
               className="overflow-hidden rounded-3xl border border-slate-200/90 bg-white p-5 sm:p-8 md:p-10 shadow-sm"
             >
-              {/* Top Metadata & Share Strip */}
+              {/* Top Metadata & Share Strip (Universal, No Category/Site Division) */}
               <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-4">
-                <div className="flex flex-wrap items-center gap-2 text-xs">
-                  <span className="rounded-md bg-sky-50 px-2.5 py-1 font-bold uppercase text-sky-800 ring-1 ring-sky-200">
-                    {formatCategoryLabel(item.category)}
-                  </span>
-                  <span className="inline-flex items-center gap-1 rounded-md bg-slate-100 px-2.5 py-1 font-semibold text-slate-700">
-                    <MapPin className="h-3.5 w-3.5 text-slate-500" />
-                    <span>
-                      Cakupan:{' '}
-                      {item.siteScope === 'GLOBAL'
-                        ? 'Sulawesi Utara'
-                        : item.siteScope}
-                    </span>
-                  </span>
-                  <span className="inline-flex items-center gap-1 text-slate-500 font-medium">
-                    <Calendar className="h-3.5 w-3.5" />
+                <div className="flex flex-wrap items-center gap-3 text-xs">
+                  <span className="inline-flex items-center gap-1.5 text-slate-600 font-semibold">
+                    <Calendar className="h-3.5 w-3.5 text-sky-700" />
                     <span>{formatIndonesianDate(item.updatedAt)}</span>
                   </span>
                   <span className="inline-flex items-center gap-1 text-slate-500 font-medium">
@@ -297,9 +269,6 @@ export function ContentDetailPage() {
                         Dokumentasi Kegiatan Balai Karantina Sulawesi Utara
                       </span>
                     </span>
-                    <span className="text-sky-800 font-mono text-[10px] uppercase font-bold">
-                      Wilayah: {item.siteScope}
-                    </span>
                   </div>
                 </div>
               )}
@@ -377,7 +346,7 @@ export function ContentDetailPage() {
               >
                 <div className="flex items-center justify-between mb-4 border-b border-slate-200 pb-2.5">
                   <h2 className="text-base sm:text-lg font-black text-slate-900">
-                    Informasi & Dokumentasi Terkait Lainnya
+                    Informasi & Dokumentasi Lainnya
                   </h2>
                   <Link
                     to={`/informasi?site=${site}`}
@@ -396,8 +365,8 @@ export function ContentDetailPage() {
                     >
                       <div>
                         <div className="flex items-center justify-between gap-2 text-[11px] text-slate-500">
-                          <span className="font-extrabold uppercase text-sky-700">
-                            {formatCategoryLabel(rel.category)}
+                          <span className="font-mono">
+                            {formatIndonesianDate(rel.updatedAt)}
                           </span>
                           <span>{estimateReadingMinutes(rel)} mnt baca</span>
                         </div>
