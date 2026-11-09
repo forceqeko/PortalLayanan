@@ -91,13 +91,8 @@ export function InformationPage() {
               alt="Logo BKHIT"
               className="h-9 w-9 shrink-0 rounded-full bg-white p-0.5 ring-1 ring-slate-200 object-contain sm:h-10 sm:w-10"
             />
-            <div>
-              <div className="text-xs sm:text-sm font-black tracking-wider text-slate-900 uppercase leading-tight">
-                BALAI KARANTINA SULAWESI UTARA
-              </div>
-              <div className="text-[11px] font-bold text-sky-700">
-                Pusat Informasi, Edukasi & Sosialisasi Publik
-              </div>
+            <div className="text-xs sm:text-sm font-black tracking-wider text-slate-900 uppercase leading-tight">
+              BALAI KARANTINA SULAWESI UTARA
             </div>
           </Link>
 
