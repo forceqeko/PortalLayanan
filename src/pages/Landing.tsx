@@ -138,7 +138,7 @@ export function LandingPage() {
           </div>
         )}
 
-        <div className="mx-auto flex max-w-7xl items-start justify-between gap-3 px-4 pt-4 pb-2 sm:gap-4 sm:px-8 sm:pt-7">
+        <div className="mx-auto flex max-w-7xl items-start justify-between gap-3 px-5 pt-4 pb-2 sm:gap-4 sm:px-8 sm:pt-7">
           {/* Top-Left Brand Identity (Click to return to Sulawesi Utara context) */}
           <button
             type="button"
@@ -617,16 +617,16 @@ export function LandingPage() {
       >
         <div
           data-testid="titik-layanan-section"
-          className="flex flex-col justify-between gap-4 lg:flex-row lg:items-end"
+          className="w-full"
         >
-          {/* Left: Pilih Wilayah Layanan + 3 Island Thumbnail Cards (Siau, Tahuna, Melonguane) */}
-          <div className="w-full max-w-2xl">
-            <div className="flex flex-wrap items-center justify-between gap-x-2.5 gap-y-1.5">
+          {/* Full-Width Pilih Wilayah Layanan + 3 Island Thumbnail Cards (Flush Left & Right with Main Cards) */}
+          <div className="w-full">
+            <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2">
               <div className="flex items-center gap-1.5">
                 <svg
                   aria-hidden="true"
                   viewBox="0 0 24 24"
-                  className="h-4 w-4 text-white"
+                  className="h-4 w-4 shrink-0 text-white"
                   fill="currentColor"
                 >
                   <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z" />
@@ -664,7 +664,7 @@ export function LandingPage() {
             <div
               role="group"
               aria-label="Pilih Wilayah Layanan Kepulauan"
-              className="mt-2.5 grid grid-cols-3 gap-2 sm:gap-3.5"
+              className="mt-2.5 grid w-full grid-cols-1 gap-2.5 sm:grid-cols-3 sm:gap-4"
             >
               {ISLAND_SITES.map((item) => {
                 const active = item.key === site
@@ -675,37 +675,42 @@ export function LandingPage() {
                     data-testid={`site-switch-${item.key}`}
                     aria-pressed={active}
                     onClick={() => switchSite(item.key as SiteKey)}
-                    className={`group flex min-h-[50px] sm:min-h-[56px] items-center justify-between gap-1.5 rounded-2xl border p-2 pr-2.5 text-left backdrop-blur-md transition sm:p-2 sm:pr-3 active:scale-95 ${
+                    className={`group flex min-h-[58px] w-full items-center justify-between gap-3 rounded-2xl border p-2.5 pr-3.5 text-left backdrop-blur-md transition sm:min-h-[62px] sm:p-2.5 sm:pr-4 active:scale-95 ${
                       active
-                        ? 'border-sky-400 bg-slate-900/70 text-white shadow-[0_0_20px_rgba(56,189,248,0.4)] ring-2 ring-sky-400/50'
-                        : 'border-white/20 bg-slate-900/50 text-white hover:border-white/40 hover:bg-slate-900/70 shadow-sm'
+                        ? 'border-sky-400 bg-slate-900/75 text-white shadow-[0_0_20px_rgba(56,189,248,0.4)] ring-2 ring-sky-400/50'
+                        : 'border-white/20 bg-slate-900/55 text-white hover:border-white/40 hover:bg-slate-900/75 shadow-sm'
                     }`}
                   >
-                    <div className="flex min-w-0 items-center gap-2">
+                    <div className="flex min-w-0 items-center gap-3">
                       <img
                         src={item.heroAsset}
                         alt=""
                         aria-hidden="true"
-                        className="hidden h-10 w-13 shrink-0 rounded-lg object-cover sm:block"
+                        className="h-10 w-14 shrink-0 rounded-xl object-cover ring-1 ring-white/15 sm:h-11 sm:w-16"
                       />
                       <div className="min-w-0">
-                        <span className="block truncate text-xs font-bold tracking-tight text-white sm:text-sm">
-                          {item.shortLabel}
-                        </span>
-                        {active && (
-                          <span className="hidden text-[10px] font-bold text-sky-400 sm:inline">
-                            Aktif
+                        <div className="flex items-center gap-2">
+                          <span className="block truncate text-sm font-bold tracking-tight text-white">
+                            {item.shortLabel}
                           </span>
-                        )}
+                          {active && (
+                            <span className="inline-flex items-center rounded-full bg-sky-500/20 px-2 py-0.5 text-[10px] font-bold text-sky-300 ring-1 ring-sky-400/30">
+                              Aktif
+                            </span>
+                          )}
+                        </div>
+                        <span className="block truncate text-[11px] text-white/75">
+                          {item.metadata.regionName}
+                        </span>
                       </div>
                     </div>
 
                     <span
                       aria-hidden="true"
-                      className={`inline-flex h-6 w-6 sm:h-7 sm:w-7 shrink-0 items-center justify-center rounded-full text-xs font-bold transition ${
+                      className={`inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-bold transition ${
                         active
                           ? 'bg-sky-500 text-white shadow-md'
-                          : 'bg-white/10 text-white/70 group-hover:bg-white/20 group-hover:text-white'
+                          : 'bg-white/10 text-white/75 group-hover:bg-white/20 group-hover:text-white'
                       }`}
                     >
                       →
