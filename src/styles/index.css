@@ -56,6 +56,14 @@
 }
 
 /* Authentic Frosted Glassmorphism Jewel Cards */
+.glass-card-ptk,
+.glass-card-qdi,
+.glass-card-info,
+.glass-card-wa {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
 .glass-card-ptk {
   background: linear-gradient(145deg, rgba(2, 132, 199, 0.42) 0%, rgba(3, 105, 161, 0.48) 50%, rgba(8, 47, 73, 0.62) 100%);
   -webkit-backdrop-filter: blur(24px) saturate(170%);
@@ -108,21 +116,31 @@
   box-shadow: 0 18px 42px -4px rgba(22, 163, 74, 0.45), inset 0 1px 1px 0 rgba(255, 255, 255, 0.55);
 }
 
-/* Regional Hero Fallback Surfaces (Light Theme) */
+@media (max-width: 639px) {
+  .glass-card-ptk,
+  .glass-card-qdi,
+  .glass-card-info,
+  .glass-card-wa {
+    -webkit-backdrop-filter: blur(14px) saturate(150%);
+    backdrop-filter: blur(14px) saturate(150%);
+  }
+}
+
+/* Regional Hero Fallback Surfaces (Deep Marine Tone to prevent light flash on mobile load) */
 .hero-gradient-sulut {
-  background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 55%, #e2e8f0 100%);
+  background: linear-gradient(135deg, #04182e 0%, #072a4a 55%, #031020 100%);
 }
 
 .hero-gradient-siau {
-  background: linear-gradient(135deg, #e0f7fa 0%, #f0fdfa 55%, #e2e8f0 100%);
+  background: linear-gradient(135deg, #041c2c 0%, #083344 55%, #031020 100%);
 }
 
 .hero-gradient-tahuna {
-  background: linear-gradient(135deg, #e0e7ff 0%, #f5f3ff 55%, #e2e8f0 100%);
+  background: linear-gradient(135deg, #061833 0%, #0c274e 55%, #031020 100%);
 }
 
 .hero-gradient-melonguane {
-  background: linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 55%, #e2e8f0 100%);
+  background: linear-gradient(135deg, #041e28 0%, #063940 55%, #031020 100%);
 }
 
 @media (prefers-reduced-motion: reduce) {

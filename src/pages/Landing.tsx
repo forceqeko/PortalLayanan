@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { AnimatePresence, motion } from 'motion/react'
 import { ENV, resolvePublicAsset } from '../config/env'
 import { getSafeServiceUrl, SERVICE_TARGETS } from '../config/services'
 import { ISLAND_SITES, SITE_LIST, type SiteKey } from '../config/sites'
@@ -19,6 +18,8 @@ export function LandingPage() {
   } = useSiteContext()
 
   const [failedHeroAsset, setFailedHeroAsset] = useState<string | null>(null)
+  const [loadedHeroAssets, setLoadedHeroAssets] = useState<Record<string, boolean>>({})
+  const heroImgRef = useRef<HTMLImageElement | null>(null)
   const [logoError, setLogoError] = useState(false)
   const [dropdownOpen, setDropdownOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement | null>(null)
@@ -62,9 +63,19 @@ export function LandingPage() {
   }, [])
 
   const heroFailed = failedHeroAsset === siteConfig.heroAsset
+  const heroLoaded = Boolean(loadedHeroAssets[siteConfig.heroAsset])
   const ptkUrl = getSafeServiceUrl('ptk', site)
   const qdiUrl = getSafeServiceUrl('qdi', site)
   const waUrl = getSafeServiceUrl('whatsapp', site)
+
+  useEffect(() => {
+    const imgEl = heroImgRef.current
+    if (imgEl && imgEl.complete && imgEl.naturalWidth > 0) {
+      setLoadedHeroAssets((prev) =>
+        prev[siteConfig.heroAsset] ? prev : { ...prev, [siteConfig.heroAsset]: true },
+      )
+    }
+  }, [siteConfig.heroAsset])
 
   return (
     <div
@@ -72,23 +83,27 @@ export function LandingPage() {
       data-site={site}
       className={`relative flex min-h-dvh w-full flex-col justify-between font-sans lg:h-dvh lg:overflow-hidden ${siteConfig.theme.gradientClass}`}
     >
-      {/* Full-Screen Archipelago Background Photograph (Toned down with brightness filter for optimal text legibility) */}
-      <AnimatePresence mode="wait">
-        {!heroFailed && (
-          <motion.img
-            key={siteConfig.heroAsset}
-            src={siteConfig.heroAsset}
-            alt={`Lanskap wilayah layanan karantina ${siteConfig.label}`}
-            onError={() => setFailedHeroAsset(siteConfig.heroAsset)}
-            initial={{ opacity: 0, scale: 1.02 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.45, ease: 'easeOut' }}
-            fetchPriority="high"
-            className="pointer-events-none absolute inset-0 h-full w-full object-cover object-center"
-          />
-        )}
-      </AnimatePresence>
+      {/* Full-Screen Archipelago Background Photograph (GPU-friendly opacity transition without scale re-blur) */}
+      {!heroFailed && (
+        <img
+          ref={heroImgRef}
+          key={siteConfig.heroAsset}
+          src={siteConfig.heroAsset}
+          alt={`Lanskap wilayah layanan karantina ${siteConfig.label}`}
+          onLoad={() =>
+            setLoadedHeroAssets((prev) => ({
+              ...prev,
+              [siteConfig.heroAsset]: true,
+            }))
+          }
+          onError={() => setFailedHeroAsset(siteConfig.heroAsset)}
+          fetchPriority="high"
+          decoding="async"
+          className={`pointer-events-none absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-300 ease-out ${
+            heroLoaded ? 'opacity-100' : 'opacity-0'
+          }`}
+        />
+      )}
 
       {/* Pure Left-to-Right Horizontal Scrim: dark on the left for maximum text contrast, 100% transparent on the right */}
       <div
@@ -274,13 +289,7 @@ export function LandingPage() {
       {/* CENTER STAGE: Hero Headline + 4 Horizontal Service Cards */}
       <main className="relative z-20 mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center px-5 py-3 sm:px-8 lg:py-0">
         {/* Hero Headline Block (Pure crisp white text over scenic directional marine scrim) */}
-        <motion.div
-          key={site}
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, ease: 'easeOut' }}
-          className="max-w-2xl"
-        >
+        <div className="max-w-2xl">
           <h1 className="gateway-h1 font-extrabold text-white">
             Gerbang Akses Layanan dan Informasi Karantina
           </h1>
@@ -290,7 +299,7 @@ export function LandingPage() {
           >
             {siteConfig.subtitle}
           </p>
-        </motion.div>
+        </div>
 
         {/* 4 Service Cards Row (Frosted Glassmorphism Jewel-Tone Cards matching reference mockup) */}
         <div
@@ -686,6 +695,8 @@ export function LandingPage() {
                         src={item.heroAsset}
                         alt=""
                         aria-hidden="true"
+                        loading="lazy"
+                        decoding="async"
                         className="hidden h-11 w-16 shrink-0 rounded-xl object-cover ring-1 ring-white/15 sm:block"
                       />
                       <div className="min-w-0">
