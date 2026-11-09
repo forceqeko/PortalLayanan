@@ -608,9 +608,6 @@ export function InformationPage() {
         <p>
           Balai Karantina Hewan, Ikan, dan Tumbuhan Sulawesi Utara (Badan Karantina Indonesia)
         </p>
-        <p className="mt-1 text-[11px] text-slate-500 font-serif italic">
-          Laut Sehat, Sulawesi Utara Lebih Kuat
-        </p>
       </footer>
     </div>
   )

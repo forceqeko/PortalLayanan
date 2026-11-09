@@ -713,17 +713,9 @@ export function LandingPage() {
             </div>
           </div>
 
-          {/* Right: Official Stylized Motto */}
-          <div className="flex flex-col items-start justify-end lg:items-end">
-            <div className="flex items-center gap-3">
-              <p className="gateway-motto -rotate-1 sm:-rotate-2 text-right text-lg sm:text-2xl font-bold tracking-wide text-sky-300 leading-tight">
-                Laut Sehat,<br className="hidden sm:inline" /> Sulawesi Utara Lebih Kuat
-              </p>
-              <span data-testid="release-version" className="sr-only">
-                Rilis: {ENV.RELEASE_VERSION}
-              </span>
-            </div>
-          </div>
+          <span data-testid="release-version" className="sr-only">
+            Rilis: {ENV.RELEASE_VERSION}
+          </span>
         </div>
       </footer>
 
