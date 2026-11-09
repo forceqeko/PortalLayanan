@@ -28,7 +28,7 @@ export const ENV = {
     import.meta.env.VITE_PTK_URL || 'https://ptk.karantinaindonesia.go.id/',
   QDI_URL:
     import.meta.env.VITE_QDI_URL ||
-    'https://qdi.karantinaindonesia.go.id/',
+    'https://qdi.minaesa.id/',
   QDI_DEEPLINK_ENABLED:
     import.meta.env.VITE_QDI_DEEPLINK_ENABLED === 'true',
   INFO_URL:

@@ -38,7 +38,7 @@ export const SERVICE_TARGETS: Record<ServiceKey, ServiceTarget> = {
     actionLabel: 'Buka Platform QDI',
     url: ENV.QDI_URL,
     enabled: true,
-    verificationNote: 'VERIFY: Sesuaikan URL production QDI sebelum UAT',
+    verificationNote: 'LOCKED: https://qdi.minaesa.id/',
   },
   info: {
     key: 'info',

@@ -9,11 +9,8 @@ test.describe('Service Integration & Allowlist Security (UAT-08, UAT-09, UAT-13,
     const ptkHref = await page.getByTestId('cta-hero-ptk').getAttribute('href')
     expect(ptkHref).toBe('https://ptk.karantinaindonesia.go.id/')
 
-    // Card 2 opens In-Portal QDI Development Page
-    await page.getByTestId('cta-hero-qdi').click()
-    await expect(page.getByTestId('qdi-development-page')).toBeVisible()
-    await page.getByTestId('back-to-landing').click()
-    await expect(page.getByTestId('hero-section')).toBeVisible()
+    const qdiHref = await page.getByTestId('cta-hero-qdi').getAttribute('href')
+    expect(qdiHref).toBe('https://qdi.minaesa.id/')
 
     // Card 3 opens Full Page Information & Multimedia Hub
     await page.getByTestId('cta-hero-info').click()
