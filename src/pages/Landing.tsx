@@ -368,11 +368,11 @@ export function LandingPage() {
               </span>
             </div>
 
-            <div className="hidden lg:mt-4 lg:block">
+            <div className="hidden lg:mt-4 lg:flex lg:min-h-[76px] lg:flex-col lg:justify-start">
               <h2 className="text-lg leading-snug font-extrabold tracking-tight text-white">
                 {SERVICE_TARGETS.ptk.label}
               </h2>
-              <p className="mt-1.5 text-xs leading-relaxed text-white/90">
+              <p className="mt-1.5 min-h-[2.5rem] text-xs leading-relaxed text-white/90">
                 {SERVICE_TARGETS.ptk.shortDescription}
               </p>
             </div>
@@ -440,11 +440,11 @@ export function LandingPage() {
               </span>
             </div>
 
-            <div className="hidden lg:mt-4 lg:block">
+            <div className="hidden lg:mt-4 lg:flex lg:min-h-[76px] lg:flex-col lg:justify-start">
               <h2 className="text-lg leading-snug font-extrabold tracking-tight text-white">
                 {SERVICE_TARGETS.qdi.label}
               </h2>
-              <p className="mt-1.5 text-xs leading-relaxed text-white/90">
+              <p className="mt-1.5 min-h-[2.5rem] text-xs leading-relaxed text-white/90">
                 {SERVICE_TARGETS.qdi.shortDescription}
               </p>
             </div>
@@ -516,11 +516,11 @@ export function LandingPage() {
               </span>
             </div>
 
-            <div className="hidden lg:mt-4 lg:block">
+            <div className="hidden lg:mt-4 lg:flex lg:min-h-[76px] lg:flex-col lg:justify-start">
               <h2 className="text-lg leading-snug font-extrabold tracking-tight text-white">
                 {SERVICE_TARGETS.info.label}
               </h2>
-              <p className="mt-1.5 text-xs leading-relaxed text-white/90">
+              <p className="mt-1.5 min-h-[2.5rem] text-xs leading-relaxed text-white/90">
                 {SERVICE_TARGETS.info.shortDescription}
               </p>
             </div>
@@ -593,11 +593,11 @@ export function LandingPage() {
               </span>
             </div>
 
-            <div className="hidden lg:mt-4 lg:block">
+            <div className="hidden lg:mt-4 lg:flex lg:min-h-[76px] lg:flex-col lg:justify-start">
               <h2 className="text-lg leading-snug font-extrabold tracking-tight text-white">
                 {SERVICE_TARGETS.whatsapp.label}
               </h2>
-              <p className="mt-1.5 text-xs leading-relaxed text-white/90">
+              <p className="mt-1.5 min-h-[2.5rem] text-xs leading-relaxed text-white/90">
                 {SERVICE_TARGETS.whatsapp.shortDescription}
               </p>
             </div>

@@ -17,12 +17,20 @@ test.describe('Single-Viewport Full-Page Gateway & Accessibility (UAT-16, UAT-17
     await expect(page.getByTestId('cta-hero-wa')).toBeVisible()
 
     // Ensure frosted glassmorphism backdrop-filter is preserved in compiled CSS
+    // and desktop card headings are horizontally aligned at the exact same Y position
+    const headingYs: number[] = []
     for (const cardId of ['cta-hero-ptk', 'cta-hero-qdi', 'cta-hero-info', 'cta-hero-wa']) {
-      const backdropFilter = await page
-        .getByTestId(cardId)
-        .evaluate((el) => window.getComputedStyle(el).backdropFilter)
+      const card = page.getByTestId(cardId)
+      const backdropFilter = await card.evaluate((el) => window.getComputedStyle(el).backdropFilter)
       expect(backdropFilter).toContain('blur(24px)')
+
+      const headingBox = await card.locator('h2').last().boundingBox()
+      expect(headingBox).not.toBeNull()
+      if (headingBox) {
+        headingYs.push(Math.round(headingBox.y))
+      }
     }
+    expect(new Set(headingYs).size).toBe(1)
 
     // Ensure no theme toggle button is rendered
     await expect(page.getByTestId('theme-toggle')).toHaveCount(0)
