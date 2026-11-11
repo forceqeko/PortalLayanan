@@ -402,21 +402,14 @@ export function LandingPage() {
             className="glass-card-qdi group flex min-h-[82px] items-center justify-between gap-3.5 rounded-3xl p-4 text-white transition duration-200 hover:-translate-y-1.5 lg:min-h-[196px] lg:flex-col lg:items-stretch lg:justify-between lg:p-5"
           >
             <div className="flex items-center gap-3.5 lg:w-full lg:justify-between">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-indigo-400 text-white shadow-md ring-1 ring-white/30">
-                <svg
-                  aria-hidden="true"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="h-6 w-6"
-                >
-                  <line x1="18" y1="20" x2="18" y2="10" />
-                  <line x1="12" y1="20" x2="12" y2="4" />
-                  <line x1="6" y1="20" x2="6" y2="14" />
-                </svg>
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-white p-1.5 shadow-md ring-1 ring-white/30">
+                <img
+                  src={resolvePublicAsset('assets/logo-qdi.jpeg')}
+                  alt="Logo Decision Intelligence (QDI)"
+                  loading="eager"
+                  decoding="async"
+                  className="h-full w-full object-contain"
+                />
               </div>
 
               <div className="lg:hidden">
