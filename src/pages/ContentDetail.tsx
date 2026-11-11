@@ -299,34 +299,46 @@ export function ContentDetailPage() {
                   ))}
               </div>
 
-              {/* Official PDF Document Attachment (Sanity CMS / Projection) */}
+              {/* Official PDF Document Viewer & Attachment (Sanity CMS / Projection) */}
               {item.documentUrl && (
                 <div
                   data-testid="content-detail-document"
-                  className="mt-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-2xl border border-sky-200 bg-sky-50/70 p-4 sm:p-5"
+                  className="mt-6 overflow-hidden rounded-2xl border border-sky-200 bg-sky-50/50 shadow-xs"
                 >
-                  <div className="flex items-start gap-3">
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-sky-700 text-white font-black text-xs shadow-xs">
-                      <FileText className="h-5 w-5" />
-                    </div>
-                    <div>
-                      <div className="text-xs sm:text-sm font-extrabold text-slate-900">
-                        Lampiran Dokumen Resmi Karantina (PDF)
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-sky-200/80 bg-sky-50/90 p-4 sm:p-5">
+                    <div className="flex items-start gap-3">
+                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-sky-700 text-white font-black text-xs shadow-xs">
+                        <FileText className="h-5 w-5" />
                       </div>
-                      <p className="mt-0.5 text-[11px] sm:text-xs text-slate-600">
-                        Unduh atau baca dokumen lengkap dalam format PDF resmi BKHIT Sulawesi Utara.
-                      </p>
+                      <div>
+                        <div className="text-xs sm:text-sm font-extrabold text-slate-900">
+                          Pratinjau & Lampiran Dokumen Resmi (PDF)
+                        </div>
+                        <p className="mt-0.5 text-[11px] sm:text-xs text-slate-600">
+                          Baca langsung dokumen PDF di bawah ini atau buka di tab baru untuk tampilan layar penuh.
+                        </p>
+                      </div>
                     </div>
+                    <a
+                      href={resolvePublicAsset(item.documentUrl)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex min-h-[44px] shrink-0 items-center justify-center gap-2 rounded-xl bg-sky-700 px-4 py-2.5 text-xs font-extrabold text-white shadow-xs transition hover:bg-sky-800 active:scale-95"
+                    >
+                      <span>Buka / Unduh PDF</span>
+                      <ExternalLink className="h-3.5 w-3.5" />
+                    </a>
                   </div>
-                  <a
-                    href={resolvePublicAsset(item.documentUrl)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex min-h-[44px] shrink-0 items-center justify-center gap-2 rounded-xl bg-sky-700 px-4 py-2.5 text-xs font-extrabold text-white shadow-xs transition hover:bg-sky-800 active:scale-95"
-                  >
-                    <span>Buka Dokumen PDF</span>
-                    <ExternalLink className="h-3.5 w-3.5" />
-                  </a>
+
+                  {/* Embedded Interactive PDF Viewer */}
+                  <div className="bg-slate-900/5 p-2 sm:p-4">
+                    <iframe
+                      src={`${resolvePublicAsset(item.documentUrl)}#view=FitH`}
+                      title={`Pratinjau PDF: ${item.title}`}
+                      data-testid="content-detail-pdf-viewer"
+                      className="h-[68dvh] min-h-[460px] w-full rounded-xl border border-slate-300 bg-white shadow-inner"
+                    />
+                  </div>
                 </div>
               )}
 

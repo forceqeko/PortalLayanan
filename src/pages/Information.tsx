@@ -320,24 +320,22 @@ export function InformationPage() {
 
                       {/* Top Left Media Type Badge (SVG, Zero Emoji) */}
                       <div className="absolute top-2.5 left-2.5 z-30 flex items-center gap-1.5">
-                        <span className="inline-flex items-center gap-1.5 rounded-lg bg-slate-900/85 px-2.5 py-1 text-[11px] font-bold text-white ring-1 ring-white/15 backdrop-blur-md">
-                          {item.videoUrl ? (
-                            <>
-                              <Film className="h-3 w-3 text-sky-400" />
-                              <span>Video</span>
-                            </>
-                          ) : (
-                            <>
-                              <ImageIcon className="h-3 w-3 text-sky-400" />
-                              <span>Foto</span>
-                            </>
-                          )}
-                        </span>
+                        {item.videoUrl ? (
+                          <span className="inline-flex items-center gap-1.5 rounded-lg bg-slate-900/85 px-2.5 py-1 text-[11px] font-bold text-white ring-1 ring-white/15 backdrop-blur-md">
+                            <Film className="h-3 w-3 text-sky-400" />
+                            <span>Video</span>
+                          </span>
+                        ) : item.mediaUrl ? (
+                          <span className="inline-flex items-center gap-1.5 rounded-lg bg-slate-900/85 px-2.5 py-1 text-[11px] font-bold text-white ring-1 ring-white/15 backdrop-blur-md">
+                            <ImageIcon className="h-3 w-3 text-sky-400" />
+                            <span>Foto</span>
+                          </span>
+                        ) : null}
 
                         {item.documentUrl && (
-                          <span className="inline-flex items-center gap-1 rounded-lg bg-sky-700/95 px-2 py-1 text-[10px] font-extrabold uppercase text-white ring-1 ring-white/20">
+                          <span className="inline-flex items-center gap-1 rounded-lg bg-sky-700/95 px-2.5 py-1 text-[11px] font-extrabold uppercase text-white ring-1 ring-white/20">
                             <FileText className="h-3 w-3" />
-                            <span>PDF</span>
+                            <span>Dokumen PDF</span>
                           </span>
                         )}
                       </div>

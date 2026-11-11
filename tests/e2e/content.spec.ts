@@ -139,5 +139,6 @@ test.describe('Universal Content Projection & Draft Protection (UAT-11, FR-012)'
       .click()
     await expect(page.getByTestId('content-detail-article')).toBeVisible()
     await expect(page.getByTestId('content-detail-document')).toBeVisible()
+    await expect(page.getByTestId('content-detail-pdf-viewer')).toBeVisible()
   })
 })
