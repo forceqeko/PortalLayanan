@@ -320,7 +320,7 @@ export function LandingPage() {
                 target: 'ptk',
               })
             }
-            className="glass-card-ptk group flex min-h-[82px] items-center justify-between gap-3.5 rounded-3xl p-4 text-white transition duration-200 hover:-translate-y-1.5 lg:min-h-[196px] lg:flex-col lg:items-stretch lg:justify-between lg:p-5"
+            className="glass-card-ptk group flex min-h-[82px] items-center justify-between gap-3.5 rounded-3xl p-4 text-white transition duration-200 hover:-translate-y-1.5 lg:min-h-[196px] lg:flex-col lg:items-stretch lg:justify-start lg:gap-0 lg:p-5"
           >
             <div className="flex items-center gap-3.5 lg:w-full lg:justify-between">
               <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-sky-400 text-white shadow-md ring-1 ring-white/30">
@@ -368,11 +368,11 @@ export function LandingPage() {
               </span>
             </div>
 
-            <div className="hidden lg:mt-4 lg:flex lg:min-h-[76px] lg:flex-col lg:justify-start">
-              <h2 className="text-lg leading-snug font-extrabold tracking-tight text-white">
+            <div className="hidden lg:mt-6 lg:flex lg:flex-col lg:justify-start">
+              <h2 className="text-base xl:text-[17px] leading-snug font-extrabold tracking-tight text-white">
                 {SERVICE_TARGETS.ptk.label}
               </h2>
-              <p className="mt-1.5 min-h-[2.5rem] text-xs leading-relaxed text-white/90">
+              <p className="mt-1.5 text-xs leading-relaxed text-white/90">
                 {SERVICE_TARGETS.ptk.shortDescription}
               </p>
             </div>
@@ -399,7 +399,7 @@ export function LandingPage() {
                 target: 'qdi',
               })
             }
-            className="glass-card-qdi group flex min-h-[82px] items-center justify-between gap-3.5 rounded-3xl p-4 text-white transition duration-200 hover:-translate-y-1.5 lg:min-h-[196px] lg:flex-col lg:items-stretch lg:justify-between lg:p-5"
+            className="glass-card-qdi group flex min-h-[82px] items-center justify-between gap-3.5 rounded-3xl p-4 text-white transition duration-200 hover:-translate-y-1.5 lg:min-h-[196px] lg:flex-col lg:items-stretch lg:justify-start lg:gap-0 lg:p-5"
           >
             <div className="flex items-center gap-3.5 lg:w-full lg:justify-between">
               <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-white p-1.5 shadow-md ring-1 ring-white/30">
@@ -440,11 +440,11 @@ export function LandingPage() {
               </span>
             </div>
 
-            <div className="hidden lg:mt-4 lg:flex lg:min-h-[76px] lg:flex-col lg:justify-start">
-              <h2 className="text-lg leading-snug font-extrabold tracking-tight text-white">
+            <div className="hidden lg:mt-6 lg:flex lg:flex-col lg:justify-start">
+              <h2 className="text-base xl:text-[17px] leading-snug font-extrabold tracking-tight text-white">
                 {SERVICE_TARGETS.qdi.label}
               </h2>
-              <p className="mt-1.5 min-h-[2.5rem] text-xs leading-relaxed text-white/90">
+              <p className="mt-1.5 text-xs leading-relaxed text-white/90">
                 {SERVICE_TARGETS.qdi.shortDescription}
               </p>
             </div>
@@ -469,7 +469,7 @@ export function LandingPage() {
                 target: 'information_page',
               })
             }
-            className="glass-card-info group flex min-h-[82px] items-center justify-between gap-3.5 rounded-3xl p-4 text-white transition duration-200 hover:-translate-y-1.5 lg:min-h-[196px] lg:flex-col lg:items-stretch lg:justify-between lg:p-5"
+            className="glass-card-info group flex min-h-[82px] items-center justify-between gap-3.5 rounded-3xl p-4 text-white transition duration-200 hover:-translate-y-1.5 lg:min-h-[196px] lg:flex-col lg:items-stretch lg:justify-start lg:gap-0 lg:p-5"
           >
             <div className="flex items-center gap-3.5 lg:w-full lg:justify-between">
               <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-teal-400 text-white shadow-md ring-1 ring-white/30">
@@ -516,11 +516,11 @@ export function LandingPage() {
               </span>
             </div>
 
-            <div className="hidden lg:mt-4 lg:flex lg:min-h-[76px] lg:flex-col lg:justify-start">
-              <h2 className="text-lg leading-snug font-extrabold tracking-tight text-white">
+            <div className="hidden lg:mt-6 lg:flex lg:flex-col lg:justify-start">
+              <h2 className="text-base xl:text-[17px] leading-snug font-extrabold tracking-tight text-white">
                 {SERVICE_TARGETS.info.label}
               </h2>
-              <p className="mt-1.5 min-h-[2.5rem] text-xs leading-relaxed text-white/90">
+              <p className="mt-1.5 text-xs leading-relaxed text-white/90">
                 {SERVICE_TARGETS.info.shortDescription}
               </p>
             </div>
@@ -547,16 +547,16 @@ export function LandingPage() {
                 target: 'whatsapp',
               })
             }
-            className="glass-card-wa group flex min-h-[82px] items-center justify-between gap-3.5 rounded-3xl p-4 text-white transition duration-200 hover:-translate-y-1.5 lg:min-h-[196px] lg:flex-col lg:items-stretch lg:justify-between lg:p-5"
+            className="glass-card-wa group flex min-h-[82px] items-center justify-between gap-3.5 rounded-3xl p-4 text-white transition duration-200 hover:-translate-y-1.5 lg:min-h-[196px] lg:flex-col lg:items-stretch lg:justify-start lg:gap-0 lg:p-5"
           >
             <div className="flex items-center gap-3.5 lg:w-full lg:justify-between">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-white p-1 shadow-md ring-1 ring-white/30">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-[#25D366] shadow-md ring-1 ring-white/30">
                 <img
                   src={resolvePublicAsset('assets/whatsapp.png')}
                   alt="Logo Tanya Karantina (WhatsApp)"
                   loading="eager"
                   decoding="async"
-                  className="h-full w-full object-contain"
+                  className="h-full w-full scale-[1.22] object-cover"
                 />
               </div>
 
@@ -588,11 +588,11 @@ export function LandingPage() {
               </span>
             </div>
 
-            <div className="hidden lg:mt-4 lg:flex lg:min-h-[76px] lg:flex-col lg:justify-start">
-              <h2 className="text-lg leading-snug font-extrabold tracking-tight text-white">
+            <div className="hidden lg:mt-6 lg:flex lg:flex-col lg:justify-start">
+              <h2 className="text-base xl:text-[17px] leading-snug font-extrabold tracking-tight text-white">
                 {SERVICE_TARGETS.whatsapp.label}
               </h2>
-              <p className="mt-1.5 min-h-[2.5rem] text-xs leading-relaxed text-white/90">
+              <p className="mt-1.5 text-xs leading-relaxed text-white/90">
                 {SERVICE_TARGETS.whatsapp.shortDescription}
               </p>
             </div>
