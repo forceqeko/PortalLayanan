@@ -76,6 +76,16 @@ export const karantinaContentSchema = {
       },
     },
     {
+      name: 'externalUrl',
+      title: 'Tautan / URL Eksternal (Opsional)',
+      type: 'url',
+      description:
+        'Masukkan alamat URL lengkap (diawali https:// atau http://) jika informasi ini merujuk ke halaman web eksternal, publikasi media sosial, atau dokumen daring.',
+      validation: (Rule: {
+        uri: (opts: { scheme: string[] }) => unknown
+      }) => Rule.uri({ scheme: ['http', 'https'] }),
+    },
+    {
       name: 'sortOrder',
       title: 'Urutan Prioritas Tampil (Angka Kecil Tampil Lebih Atas)',
       type: 'number',

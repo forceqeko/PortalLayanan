@@ -111,6 +111,7 @@ test.describe('Universal Content Projection & Draft Protection (UAT-11, FR-012)'
               documentFile: {
                 asset: { url: '/media/panduan-ptk-online.pdf' },
               },
+              externalUrl: 'https://karantinaindonesia.go.id',
             },
             {
               _id: 'drafts.sanity-doc-rahasia-99',
@@ -140,5 +141,10 @@ test.describe('Universal Content Projection & Draft Protection (UAT-11, FR-012)'
     await expect(page.getByTestId('content-detail-article')).toBeVisible()
     await expect(page.getByTestId('content-detail-document')).toBeVisible()
     await expect(page.getByTestId('content-detail-pdf-viewer')).toBeVisible()
+    await expect(page.getByTestId('content-detail-external-link')).toBeVisible()
+    await expect(page.getByTestId('content-detail-external-cta')).toHaveAttribute(
+      'href',
+      'https://karantinaindonesia.go.id',
+    )
   })
 })

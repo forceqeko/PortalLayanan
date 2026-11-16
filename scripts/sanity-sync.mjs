@@ -33,6 +33,7 @@ const GROQ_QUERY = `*[_type == "karantinaContent" && !(_id in path("drafts.**"))
   "mediaUrl": coalesce(mediaImage.asset->url + "?auto=format&fit=max&w=1200&q=80", mediaUrl),
   "videoUrl": coalesce(videoFile.asset->url, videoUrl),
   "documentUrl": coalesce(documentFile.asset->url, documentUrl),
+  externalUrl,
   "publishAt": coalesce(publishAt, _createdAt),
   expireAt,
   "updatedAt": coalesce(updatedAt, _updatedAt),
@@ -100,6 +101,10 @@ function transformSanityPayload(rawResponse) {
         typeof item.documentUrl === 'string' && item.documentUrl.trim()
           ? item.documentUrl.trim()
           : docAsset,
+      externalUrl:
+        typeof item.externalUrl === 'string' && item.externalUrl.trim()
+          ? item.externalUrl.trim()
+          : null,
       publishAt: item.publishAt ?? item._createdAt ?? null,
       expireAt: item.expireAt ?? null,
       updatedAt: item.updatedAt ?? item._updatedAt ?? new Date().toISOString(),

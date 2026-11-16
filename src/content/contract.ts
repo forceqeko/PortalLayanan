@@ -28,6 +28,7 @@ export type PublishedContentItem = {
   mediaUrl: string | null
   videoUrl?: string | null
   documentUrl?: string | null
+  externalUrl?: string | null
   publishAt?: string | null
   expireAt?: string | null
   updatedAt: string
@@ -54,6 +55,16 @@ const VALID_TYPES: readonly ContentType[] = [
   'document',
   'media',
 ]
+
+function sanitizeHttpUrl(raw: unknown): string | null {
+  if (typeof raw !== 'string') return null
+  const trimmed = raw.trim()
+  if (!trimmed) return null
+  if (/^https?:\/\//i.test(trimmed)) {
+    return trimmed
+  }
+  return null
+}
 
 function normalizeScope(raw: unknown): ContentSiteScope {
   if (typeof raw === 'string') {
@@ -144,6 +155,9 @@ export function parsePublishedProjection(raw: unknown): PublishedProjection {
           : typeof item.document_url === 'string'
             ? item.document_url
             : null,
+      externalUrl: sanitizeHttpUrl(
+        item.externalUrl ?? item.external_url ?? null,
+      ),
       publishAt:
         typeof item.publishAt === 'string'
           ? item.publishAt

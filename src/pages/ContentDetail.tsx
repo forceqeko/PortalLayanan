@@ -342,6 +342,39 @@ export function ContentDetailPage() {
                 </div>
               )}
 
+              {/* External URL Reference Callout (Opsi 2: Inside Detail View) */}
+              {item.externalUrl && (
+                <div
+                  data-testid="content-detail-external-link"
+                  className="mt-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-2xl border border-indigo-200 bg-indigo-50/70 p-4 sm:p-5 shadow-xs"
+                >
+                  <div className="flex min-w-0 items-start gap-3">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-indigo-700 text-white shadow-xs">
+                      <ExternalLink className="h-5 w-5" />
+                    </div>
+                    <div className="min-w-0">
+                      <div className="text-xs sm:text-sm font-extrabold text-slate-900">
+                        Tautan / Sumber Eksternal Resmi
+                      </div>
+                      <p className="mt-0.5 truncate text-[11px] sm:text-xs font-medium text-indigo-900/80">
+                        {item.externalUrl}
+                      </p>
+                    </div>
+                  </div>
+
+                  <a
+                    href={item.externalUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-testid="content-detail-external-cta"
+                    className="inline-flex min-h-[44px] shrink-0 items-center justify-center gap-2 rounded-xl bg-indigo-700 px-4 py-2.5 text-xs font-extrabold text-white shadow-xs transition hover:bg-indigo-800 active:scale-95"
+                  >
+                    <span>Buka Tautan Eksternal</span>
+                    <ExternalLink className="h-3.5 w-3.5" />
+                  </a>
+                </div>
+              )}
+
               {/* Bottom Actions */}
               <div className="mt-8 pt-6 border-t border-slate-200 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
                 <a

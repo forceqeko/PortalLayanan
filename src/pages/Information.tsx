@@ -338,6 +338,13 @@ export function InformationPage() {
                             <span>Dokumen PDF</span>
                           </span>
                         )}
+
+                        {item.externalUrl && (
+                          <span className="inline-flex items-center gap-1 rounded-lg bg-indigo-700/95 px-2.5 py-1 text-[11px] font-extrabold uppercase text-white ring-1 ring-white/20">
+                            <ExternalLink className="h-3 w-3" />
+                            <span>Tautan</span>
+                          </span>
+                        )}
                       </div>
 
                       {/* Bottom Right Reading Time Badge */}

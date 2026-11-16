@@ -24,6 +24,7 @@ export const SANITY_PUBLISHED_GROQ_QUERY = `*[_type == "karantinaContent" && !(_
   "mediaUrl": coalesce(mediaImage.asset->url + "?auto=format&fit=max&w=1600&q=85", mediaUrl),
   "videoUrl": coalesce(videoFile.asset->url, videoUrl),
   "documentUrl": coalesce(documentFile.asset->url, documentUrl),
+  externalUrl,
   "publishAt": coalesce(publishAt, _createdAt),
   expireAt,
   "updatedAt": coalesce(updatedAt, _updatedAt),
@@ -139,6 +140,10 @@ export function transformSanityResponseToProjection(
           typeof item.documentUrl === 'string' && item.documentUrl.trim()
             ? item.documentUrl.trim()
             : docAssetUrl,
+        externalUrl:
+          typeof item.externalUrl === 'string' && item.externalUrl.trim()
+            ? item.externalUrl.trim()
+            : null,
         publishAt:
           typeof item.publishAt === 'string'
             ? item.publishAt
