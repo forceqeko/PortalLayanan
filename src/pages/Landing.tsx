@@ -614,121 +614,121 @@ export function LandingPage() {
       >
         <div
           data-testid="titik-layanan-section"
-          className="flex w-full flex-col justify-between gap-3.5 lg:flex-row lg:items-end lg:gap-5"
+          className="grid w-full grid-cols-[auto_minmax(0,1fr)] items-center gap-2.5 lg:grid-cols-[minmax(0,1fr)_auto] lg:grid-rows-[auto_auto] lg:items-end lg:gap-x-5 lg:gap-y-2.5"
         >
-          {/* Left: Pilih Wilayah Layanan + 3 Island Thumbnail Cards */}
-          <div className="min-w-0 flex-1">
-            <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2">
-              <div className="flex items-center gap-1.5">
-                <svg
-                  aria-hidden="true"
-                  viewBox="0 0 24 24"
-                  className="h-4 w-4 shrink-0 text-white"
-                  fill="currentColor"
-                >
-                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z" />
-                </svg>
-                <span className="gateway-subtitle text-xs sm:text-sm font-extrabold text-white">
-                  Pilih Wilayah Layanan
-                </span>
-                <span className="gateway-subtitle hidden text-xs font-normal text-white/80 sm:inline">
-                  (Akses informasi dan layanan sesuai wilayah Anda)
-                </span>
-              </div>
-
-              <button
-                type="button"
-                onClick={() => setMinimapModalOpen(true)}
-                data-testid="toggle-minimap-modal-btn"
-                className="inline-flex min-h-[44px] items-center gap-1.5 rounded-full border border-white/20 bg-slate-900/60 backdrop-blur-md px-3.5 py-1.5 text-xs font-bold text-white shadow-sm transition hover:bg-slate-900/80 active:scale-95 focus-visible:outline-none"
-              >
-                <svg
-                  aria-hidden="true"
-                  viewBox="0 0 24 24"
-                  className="h-3.5 w-3.5 text-sky-400"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                >
-                  <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6" />
-                  <line x1="8" y1="2" x2="8" y2="18" />
-                  <line x1="16" y1="6" x2="16" y2="22" />
-                </svg>
-                <span>Peta Pos Layanan</span>
-              </button>
-            </div>
-
-            <div
-              role="group"
-              aria-label="Pilih Wilayah Layanan Kepulauan"
-              className="mt-2.5 grid w-full grid-cols-3 gap-2 sm:gap-3.5"
+          {/* 1. Title: Pilih Wilayah Layanan */}
+          <div className="col-span-2 order-1 flex items-center gap-1.5 lg:col-span-1 lg:col-start-1 lg:row-start-1 lg:self-center">
+            <svg
+              aria-hidden="true"
+              viewBox="0 0 24 24"
+              className="h-4 w-4 shrink-0 text-white"
+              fill="currentColor"
             >
-              {ISLAND_SITES.map((item) => {
-                const active = item.key === site
-                return (
-                  <button
-                    key={item.key}
-                    type="button"
-                    data-testid={`site-switch-${item.key}`}
-                    aria-pressed={active}
-                    onClick={() => switchSite(item.key as SiteKey)}
-                    className={`group flex min-h-[48px] w-full items-center justify-between gap-1 rounded-2xl border px-2.5 py-2 text-left backdrop-blur-md transition sm:min-h-[62px] sm:gap-2.5 sm:p-2 sm:pr-3.5 active:scale-95 ${
-                      active
-                        ? 'border-sky-400 bg-slate-900/75 text-white shadow-[0_0_20px_rgba(56,189,248,0.4)] ring-2 ring-sky-400/50'
-                        : 'border-white/20 bg-slate-900/55 text-white hover:border-white/40 hover:bg-slate-900/75 shadow-sm'
-                    }`}
-                  >
-                    <div className="flex min-w-0 items-center gap-2 sm:gap-2.5">
-                      <img
-                        src={item.heroAsset}
-                        alt=""
-                        aria-hidden="true"
-                        loading="lazy"
-                        decoding="async"
-                        className="hidden h-10 w-14 shrink-0 rounded-xl object-cover ring-1 ring-white/15 sm:block"
-                      />
-                      <div className="min-w-0">
-                        <div className="flex items-center gap-1.5">
-                          <span className="block truncate text-[11px] font-bold tracking-tight text-white sm:text-sm">
-                            {item.shortLabel}
-                          </span>
-                          {active && (
-                            <span className="hidden items-center rounded-full bg-sky-500/20 px-1.5 py-0.5 text-[10px] font-bold text-sky-300 ring-1 ring-sky-400/30 xl:inline-flex">
-                              Aktif
-                            </span>
-                          )}
-                        </div>
-                        <span className="hidden truncate text-[11px] text-white/75 md:block">
-                          {item.metadata.regionName}
-                        </span>
-                      </div>
-                    </div>
-
-                    <span
-                      aria-hidden="true"
-                      className={`inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[10px] font-bold transition sm:h-6 sm:w-6 sm:text-xs ${
-                        active
-                          ? 'bg-sky-500 text-white shadow-md'
-                          : 'bg-white/10 text-white/75 group-hover:bg-white/20 group-hover:text-white'
-                      }`}
-                    >
-                      →
-                    </span>
-                  </button>
-                )
-              })}
-            </div>
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z" />
+            </svg>
+            <span className="gateway-subtitle text-xs sm:text-sm font-extrabold text-white">
+              Pilih Wilayah Layanan
+            </span>
+            <span className="gateway-subtitle hidden text-xs font-normal text-white/80 sm:inline">
+              (Akses informasi dan layanan sesuai wilayah Anda)
+            </span>
           </div>
 
-          {/* Bottom-Right Corner: Additional QR Code Card (Panduan Pengguna QDI) */}
+          {/* 2. 3 Island Thumbnail Cards (Row 2 on both Mobile and Desktop) */}
+          <div
+            role="group"
+            aria-label="Pilih Wilayah Layanan Kepulauan"
+            className="col-span-2 order-2 grid w-full grid-cols-3 gap-2 sm:gap-3.5 lg:col-span-1 lg:col-start-1 lg:row-start-2"
+          >
+            {ISLAND_SITES.map((item) => {
+              const active = item.key === site
+              return (
+                <button
+                  key={item.key}
+                  type="button"
+                  data-testid={`site-switch-${item.key}`}
+                  aria-pressed={active}
+                  onClick={() => switchSite(item.key as SiteKey)}
+                  className={`group flex min-h-[48px] w-full items-center justify-between gap-1 rounded-2xl border px-2.5 py-2 text-left backdrop-blur-md transition sm:min-h-[62px] sm:gap-2.5 sm:p-2 sm:pr-3.5 active:scale-95 ${
+                    active
+                      ? 'border-sky-400 bg-slate-900/75 text-white shadow-[0_0_20px_rgba(56,189,248,0.4)] ring-2 ring-sky-400/50'
+                      : 'border-white/20 bg-slate-900/55 text-white hover:border-white/40 hover:bg-slate-900/75 shadow-sm'
+                  }`}
+                >
+                  <div className="flex min-w-0 items-center gap-2 sm:gap-2.5">
+                    <img
+                      src={item.heroAsset}
+                      alt=""
+                      aria-hidden="true"
+                      loading="lazy"
+                      decoding="async"
+                      className="hidden h-10 w-14 shrink-0 rounded-xl object-cover ring-1 ring-white/15 sm:block"
+                    />
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-1.5">
+                        <span className="block truncate text-[11px] font-bold tracking-tight text-white sm:text-sm">
+                          {item.shortLabel}
+                        </span>
+                        {active && (
+                          <span className="hidden items-center rounded-full bg-sky-500/20 px-1.5 py-0.5 text-[10px] font-bold text-sky-300 ring-1 ring-sky-400/30 xl:inline-flex">
+                            Aktif
+                          </span>
+                        )}
+                      </div>
+                      <span className="hidden truncate text-[11px] text-white/75 md:block">
+                        {item.metadata.regionName}
+                      </span>
+                    </div>
+                  </div>
+
+                  <span
+                    aria-hidden="true"
+                    className={`inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[10px] font-bold transition sm:h-6 sm:w-6 sm:text-xs ${
+                      active
+                        ? 'bg-sky-500 text-white shadow-md'
+                        : 'bg-white/10 text-white/75 group-hover:bg-white/20 group-hover:text-white'
+                    }`}
+                  >
+                    →
+                  </span>
+                </button>
+              )
+            })}
+          </div>
+
+          {/* 3. Peta Pos Layanan Button: Beside QR Code on Mobile (Row 3 Left), Top-Right of Island Section on Desktop */}
+          <button
+            type="button"
+            onClick={() => setMinimapModalOpen(true)}
+            data-testid="toggle-minimap-modal-btn"
+            className="order-3 inline-flex min-h-[60px] items-center justify-center gap-2 self-stretch rounded-2xl border border-white/20 bg-slate-900/60 px-3 py-2 text-left text-xs font-bold text-white shadow-sm backdrop-blur-md transition hover:bg-slate-900/80 active:scale-95 focus-visible:outline-none lg:col-start-1 lg:row-start-1 lg:min-h-[44px] lg:self-center lg:justify-self-end lg:rounded-full lg:px-3.5 lg:py-1.5"
+          >
+            <svg
+              aria-hidden="true"
+              viewBox="0 0 24 24"
+              className="h-4 w-4 shrink-0 text-sky-400 lg:h-3.5 lg:w-3.5"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6" />
+              <line x1="8" y1="2" x2="8" y2="18" />
+              <line x1="16" y1="6" x2="16" y2="22" />
+            </svg>
+            <span className="leading-tight">
+              Peta Pos<br className="sm:hidden" /> Layanan
+            </span>
+          </button>
+
+          {/* 4. QR Code Card (Panduan Pengguna QDI): Beside Peta Button on Mobile (Row 3 Right), Bottom-Right Corner on Desktop */}
           <a
             href="https://cdn.sanity.io/files/vymwpeju/production/1ac8096741f72149bc10508339b8daf8a77bb186.pdf"
             target="_blank"
             rel="noopener noreferrer"
             data-testid="qr-panduan-qdi-card"
-            className="group flex shrink-0 items-center gap-3 self-end rounded-2xl border border-white/20 bg-slate-900/60 p-2 pr-3.5 text-white shadow-lg backdrop-blur-md transition duration-200 hover:-translate-y-0.5 hover:border-sky-300/60 hover:bg-slate-900/80"
+            className="group order-4 flex min-h-[60px] min-w-0 items-center gap-2.5 self-stretch rounded-2xl border border-white/20 bg-slate-900/60 p-2 pr-3 text-white shadow-lg backdrop-blur-md transition duration-200 hover:-translate-y-0.5 hover:border-sky-300/60 hover:bg-slate-900/80 lg:col-start-2 lg:row-start-1 lg:row-span-2 lg:self-end lg:gap-3 lg:pr-3.5"
           >
-            <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-white p-1 shadow-xs ring-1 ring-white/40 sm:h-14 sm:w-14">
+            <div className="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-white p-1 shadow-xs ring-1 ring-white/40 sm:h-14 sm:w-14">
               <img
                 src={resolvePublicAsset('assets/qr-panduan-qdi.svg')}
                 alt="QR Code Panduan Pengguna QDI"
@@ -739,14 +739,14 @@ export function LandingPage() {
               />
             </div>
 
-            <div className="min-w-0">
+            <div className="min-w-0 flex-1">
               <span className="inline-flex items-center rounded bg-sky-500/25 px-1.5 py-0.5 text-[9px] font-extrabold tracking-wider text-sky-200 uppercase ring-1 ring-sky-300/30">
                 Scan QR / Klik
               </span>
-              <div className="mt-0.5 text-xs font-extrabold tracking-tight text-white sm:text-sm leading-tight">
+              <div className="mt-0.5 truncate text-xs font-extrabold tracking-tight text-white sm:text-sm leading-tight">
                 Panduan Pengguna QDI
               </div>
-              <p className="mt-0.5 text-[10px] leading-tight text-white/75">
+              <p className="mt-0.5 truncate text-[10px] leading-tight text-white/75">
                 Buka dokumen panduan (PDF)
               </p>
             </div>
