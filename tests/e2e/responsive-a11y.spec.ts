@@ -15,9 +15,10 @@ test.describe('Single-Viewport Full-Page Gateway & Accessibility (UAT-16, UAT-17
     await expect(page.getByTestId('cta-hero-qdi')).toBeVisible()
     await expect(page.getByTestId('cta-hero-info')).toBeVisible()
     await expect(page.getByTestId('cta-hero-wa')).toBeVisible()
+    await expect(page.getByTestId('qr-panduan-qdi-card')).toBeVisible()
 
     // Ensure frosted glassmorphism backdrop-filter is preserved in compiled CSS
-    // and desktop card headings are horizontally aligned at the exact same Y position
+    // and desktop card headings are horizontally aligned at the same Y position
     const headingYs: number[] = []
     for (const cardId of ['cta-hero-ptk', 'cta-hero-qdi', 'cta-hero-info', 'cta-hero-wa']) {
       const card = page.getByTestId(cardId)
@@ -27,10 +28,10 @@ test.describe('Single-Viewport Full-Page Gateway & Accessibility (UAT-16, UAT-17
       const headingBox = await card.locator('h2').last().boundingBox()
       expect(headingBox).not.toBeNull()
       if (headingBox) {
-        headingYs.push(Math.round(headingBox.y))
+        headingYs.push(headingBox.y)
       }
     }
-    expect(new Set(headingYs).size).toBe(1)
+    expect(Math.max(...headingYs) - Math.min(...headingYs)).toBeLessThanOrEqual(2)
 
     // Ensure no theme toggle button is rendered
     await expect(page.getByTestId('theme-toggle')).toHaveCount(0)

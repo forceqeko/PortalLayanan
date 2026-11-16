@@ -288,17 +288,51 @@ export function LandingPage() {
 
       {/* CENTER STAGE: Hero Headline + 4 Horizontal Service Cards */}
       <main className="relative z-20 mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center px-5 py-3 sm:px-8 lg:py-0">
-        {/* Hero Headline Block (Pure crisp white text over scenic directional marine scrim) */}
-        <div className="max-w-2xl">
-          <h1 className="gateway-h1 font-extrabold text-white">
-            Gerbang Akses Layanan dan Informasi Karantina
-          </h1>
-          <p
-            data-testid="hero-subtitle"
-            className="gateway-subtitle mt-2 max-w-xl text-xs sm:text-sm leading-relaxed font-semibold text-white/95"
+        {/* Top Stage Row: Left Hero Headline | Right Direct QR Code (Panduan Pengguna QDI) */}
+        <div className="flex flex-col gap-3.5 lg:flex-row lg:items-end lg:justify-between">
+          <div className="max-w-2xl">
+            <h1 className="gateway-h1 font-extrabold text-white">
+              Gerbang Akses Layanan dan Informasi Karantina
+            </h1>
+            <p
+              data-testid="hero-subtitle"
+              className="gateway-subtitle mt-2 max-w-xl text-xs sm:text-sm leading-relaxed font-semibold text-white/95"
+            >
+              {siteConfig.subtitle}
+            </p>
+          </div>
+
+          {/* Direct QR Code Card: Panduan Pengguna QDI */}
+          <a
+            href="https://cdn.sanity.io/files/vymwpeju/production/1ac8096741f72149bc10508339b8daf8a77bb186.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-testid="qr-panduan-qdi-card"
+            className="group flex items-center gap-3.5 self-stretch rounded-2xl border border-white/25 bg-slate-900/60 p-2.5 pr-4 text-white shadow-lg backdrop-blur-md transition duration-200 hover:-translate-y-0.5 hover:border-sky-300/60 hover:bg-slate-900/75 lg:max-w-xs lg:self-auto"
           >
-            {siteConfig.subtitle}
-          </p>
+            <div className="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-white p-1 shadow-sm ring-1 ring-white/40 sm:h-20 sm:w-20">
+              <img
+                src={resolvePublicAsset('assets/qr-panduan-qdi.svg')}
+                alt="QR Code Panduan Pengguna QDI"
+                width={80}
+                height={80}
+                decoding="async"
+                className="h-full w-full object-contain"
+              />
+            </div>
+
+            <div className="min-w-0 flex-1">
+              <span className="inline-flex items-center gap-1 rounded-md bg-sky-500/25 px-2 py-0.5 text-[10px] font-extrabold tracking-wider text-sky-200 uppercase ring-1 ring-sky-300/30">
+                Scan QR / Klik
+              </span>
+              <div className="mt-1 text-sm font-extrabold tracking-tight text-white sm:text-base leading-snug">
+                Panduan Pengguna QDI
+              </div>
+              <p className="mt-0.5 text-[11px] leading-snug text-white/85">
+                Buka langsung dokumen panduan di tab baru
+              </p>
+            </div>
+          </a>
         </div>
 
         {/* 4 Service Cards Row (Frosted Glassmorphism Jewel-Tone Cards matching reference mockup) */}
