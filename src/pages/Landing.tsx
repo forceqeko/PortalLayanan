@@ -614,7 +614,7 @@ export function LandingPage() {
       >
         <div
           data-testid="titik-layanan-section"
-          className="grid w-full grid-cols-[auto_minmax(0,1fr)] items-center gap-2.5 lg:grid-cols-[minmax(0,1fr)_auto] lg:grid-rows-[auto_auto] lg:items-end lg:gap-x-5 lg:gap-y-2.5"
+          className="grid w-full grid-cols-[minmax(0,1fr)_auto] items-stretch gap-2.5 lg:grid-rows-[auto_auto] lg:items-end lg:gap-x-5 lg:gap-y-2.5"
         >
           {/* 1. Title: Pilih Wilayah Layanan */}
           <div className="col-span-2 order-1 flex items-center gap-1.5 lg:col-span-1 lg:col-start-1 lg:row-start-1 lg:self-center">
@@ -696,37 +696,46 @@ export function LandingPage() {
             })}
           </div>
 
-          {/* 3. Peta Pos Layanan Button: Beside QR Code on Mobile (Row 3 Left), Top-Right of Island Section on Desktop */}
+          {/* 3. Peta Pos Layanan Button: Proportional Card beside QR Code on Mobile (Row 3 Left), Pill at Top-Right of Island Section on Desktop */}
           <button
             type="button"
             onClick={() => setMinimapModalOpen(true)}
             data-testid="toggle-minimap-modal-btn"
-            className="order-3 inline-flex min-h-[60px] items-center justify-center gap-2 self-stretch rounded-2xl border border-white/20 bg-slate-900/60 px-3 py-2 text-left text-xs font-bold text-white shadow-sm backdrop-blur-md transition hover:bg-slate-900/80 active:scale-95 focus-visible:outline-none lg:col-start-1 lg:row-start-1 lg:min-h-[44px] lg:self-center lg:justify-self-end lg:rounded-full lg:px-3.5 lg:py-1.5"
+            className="order-3 flex min-h-[60px] w-full items-center justify-between gap-2 self-stretch rounded-2xl border border-white/20 bg-slate-900/60 p-2.5 pr-3 text-left text-white shadow-sm backdrop-blur-md transition hover:bg-slate-900/80 active:scale-95 focus-visible:outline-none lg:col-start-1 lg:row-start-1 lg:min-h-[44px] lg:w-auto lg:self-center lg:justify-self-end lg:rounded-full lg:px-3.5 lg:py-1.5"
           >
-            <svg
-              aria-hidden="true"
-              viewBox="0 0 24 24"
-              className="h-4 w-4 shrink-0 text-sky-400 lg:h-3.5 lg:w-3.5"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6" />
-              <line x1="8" y1="2" x2="8" y2="18" />
-              <line x1="16" y1="6" x2="16" y2="22" />
-            </svg>
-            <span className="leading-tight">
-              Peta Pos<br className="sm:hidden" /> Layanan
-            </span>
+            <div className="flex min-w-0 items-center gap-2.5 lg:gap-1.5">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-sky-500/20 text-sky-400 ring-1 ring-sky-400/30 lg:h-auto lg:w-auto lg:rounded-none lg:bg-transparent lg:ring-0">
+                <svg
+                  aria-hidden="true"
+                  viewBox="0 0 24 24"
+                  className="h-4 w-4 shrink-0 text-sky-400 lg:h-3.5 lg:w-3.5"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6" />
+                  <line x1="8" y1="2" x2="8" y2="18" />
+                  <line x1="16" y1="6" x2="16" y2="22" />
+                </svg>
+              </div>
+              <div className="min-w-0">
+                <span className="block text-xs font-extrabold leading-tight text-white">
+                  Peta Pos Layanan
+                </span>
+                <span className="mt-0.5 block truncate text-[10px] leading-tight text-white/75 lg:hidden">
+                  Lokasi titik layanan
+                </span>
+              </div>
+            </div>
           </button>
 
-          {/* 4. QR Code Card (Panduan Pengguna QDI): Beside Peta Button on Mobile (Row 3 Right), Bottom-Right Corner on Desktop */}
+          {/* 4. QR Code Card (Panduan Pengguna QDI): Tight Fit (Zero Empty Space) on Mobile & Desktop */}
           <a
             href="https://cdn.sanity.io/files/vymwpeju/production/1ac8096741f72149bc10508339b8daf8a77bb186.pdf"
             target="_blank"
             rel="noopener noreferrer"
             data-testid="qr-panduan-qdi-card"
-            className="group order-4 flex min-h-[60px] min-w-0 items-center gap-2.5 self-stretch rounded-2xl border border-white/20 bg-slate-900/60 p-2 pr-3 text-white shadow-lg backdrop-blur-md transition duration-200 hover:-translate-y-0.5 hover:border-sky-300/60 hover:bg-slate-900/80 lg:col-start-2 lg:row-start-1 lg:row-span-2 lg:self-end lg:gap-3 lg:pr-3.5"
+            className="group order-4 flex min-h-[60px] w-fit items-center gap-2.5 self-stretch justify-self-end rounded-2xl border border-white/20 bg-slate-900/60 p-2 pr-3.5 text-white shadow-lg backdrop-blur-md transition duration-200 hover:-translate-y-0.5 hover:border-sky-300/60 hover:bg-slate-900/80 lg:col-start-2 lg:row-start-1 lg:row-span-2 lg:self-end lg:gap-3"
           >
             <div className="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-white p-1 shadow-xs ring-1 ring-white/40 sm:h-14 sm:w-14">
               <img
@@ -739,14 +748,14 @@ export function LandingPage() {
               />
             </div>
 
-            <div className="min-w-0 flex-1">
+            <div className="min-w-0">
               <span className="inline-flex items-center rounded bg-sky-500/25 px-1.5 py-0.5 text-[9px] font-extrabold tracking-wider text-sky-200 uppercase ring-1 ring-sky-300/30">
                 Scan QR / Klik
               </span>
-              <div className="mt-0.5 truncate text-xs font-extrabold tracking-tight text-white sm:text-sm leading-tight">
+              <div className="mt-0.5 whitespace-nowrap text-xs font-extrabold tracking-tight text-white sm:text-sm leading-tight">
                 Panduan Pengguna QDI
               </div>
-              <p className="mt-0.5 truncate text-[10px] leading-tight text-white/75">
+              <p className="mt-0.5 whitespace-nowrap text-[10px] leading-tight text-white/75">
                 Buka dokumen panduan (PDF)
               </p>
             </div>
