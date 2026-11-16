@@ -288,51 +288,17 @@ export function LandingPage() {
 
       {/* CENTER STAGE: Hero Headline + 4 Horizontal Service Cards */}
       <main className="relative z-20 mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center px-5 py-3 sm:px-8 lg:py-0">
-        {/* Top Stage Row: Left Hero Headline | Right Direct QR Code (Panduan Pengguna QDI) */}
-        <div className="flex flex-col gap-3.5 lg:flex-row lg:items-end lg:justify-between">
-          <div className="max-w-2xl">
-            <h1 className="gateway-h1 font-extrabold text-white">
-              Gerbang Akses Layanan dan Informasi Karantina
-            </h1>
-            <p
-              data-testid="hero-subtitle"
-              className="gateway-subtitle mt-2 max-w-xl text-xs sm:text-sm leading-relaxed font-semibold text-white/95"
-            >
-              {siteConfig.subtitle}
-            </p>
-          </div>
-
-          {/* Direct QR Code Card: Panduan Pengguna QDI */}
-          <a
-            href="https://cdn.sanity.io/files/vymwpeju/production/1ac8096741f72149bc10508339b8daf8a77bb186.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            data-testid="qr-panduan-qdi-card"
-            className="group flex items-center gap-3.5 self-stretch rounded-2xl border border-white/25 bg-slate-900/60 p-2.5 pr-4 text-white shadow-lg backdrop-blur-md transition duration-200 hover:-translate-y-0.5 hover:border-sky-300/60 hover:bg-slate-900/75 lg:max-w-xs lg:self-auto"
+        {/* Hero Headline Block (Pure crisp white text over scenic directional marine scrim) */}
+        <div className="max-w-2xl">
+          <h1 className="gateway-h1 font-extrabold text-white">
+            Gerbang Akses Layanan dan Informasi Karantina
+          </h1>
+          <p
+            data-testid="hero-subtitle"
+            className="gateway-subtitle mt-2 max-w-xl text-xs sm:text-sm leading-relaxed font-semibold text-white/95"
           >
-            <div className="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-white p-1 shadow-sm ring-1 ring-white/40 sm:h-20 sm:w-20">
-              <img
-                src={resolvePublicAsset('assets/qr-panduan-qdi.svg')}
-                alt="QR Code Panduan Pengguna QDI"
-                width={80}
-                height={80}
-                decoding="async"
-                className="h-full w-full object-contain"
-              />
-            </div>
-
-            <div className="min-w-0 flex-1">
-              <span className="inline-flex items-center gap-1 rounded-md bg-sky-500/25 px-2 py-0.5 text-[10px] font-extrabold tracking-wider text-sky-200 uppercase ring-1 ring-sky-300/30">
-                Scan QR / Klik
-              </span>
-              <div className="mt-1 text-sm font-extrabold tracking-tight text-white sm:text-base leading-snug">
-                Panduan Pengguna QDI
-              </div>
-              <p className="mt-0.5 text-[11px] leading-snug text-white/85">
-                Buka langsung dokumen panduan di tab baru
-              </p>
-            </div>
-          </a>
+            {siteConfig.subtitle}
+          </p>
         </div>
 
         {/* 4 Service Cards Row (Frosted Glassmorphism Jewel-Tone Cards matching reference mockup) */}
@@ -648,10 +614,10 @@ export function LandingPage() {
       >
         <div
           data-testid="titik-layanan-section"
-          className="w-full"
+          className="flex w-full flex-col justify-between gap-3.5 lg:flex-row lg:items-end lg:gap-5"
         >
-          {/* Full-Width Pilih Wilayah Layanan + 3 Island Thumbnail Cards (Flush Left & Right with Main Cards) */}
-          <div className="w-full">
+          {/* Left: Pilih Wilayah Layanan + 3 Island Thumbnail Cards */}
+          <div className="min-w-0 flex-1">
             <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2">
               <div className="flex items-center gap-1.5">
                 <svg
@@ -695,7 +661,7 @@ export function LandingPage() {
             <div
               role="group"
               aria-label="Pilih Wilayah Layanan Kepulauan"
-              className="mt-2.5 grid w-full grid-cols-3 gap-2 sm:gap-4"
+              className="mt-2.5 grid w-full grid-cols-3 gap-2 sm:gap-3.5"
             >
               {ISLAND_SITES.map((item) => {
                 const active = item.key === site
@@ -706,33 +672,33 @@ export function LandingPage() {
                     data-testid={`site-switch-${item.key}`}
                     aria-pressed={active}
                     onClick={() => switchSite(item.key as SiteKey)}
-                    className={`group flex min-h-[48px] w-full items-center justify-between gap-1 rounded-2xl border px-2.5 py-2 text-left backdrop-blur-md transition sm:min-h-[62px] sm:gap-3 sm:p-2.5 sm:pr-4 active:scale-95 ${
+                    className={`group flex min-h-[48px] w-full items-center justify-between gap-1 rounded-2xl border px-2.5 py-2 text-left backdrop-blur-md transition sm:min-h-[62px] sm:gap-2.5 sm:p-2 sm:pr-3.5 active:scale-95 ${
                       active
                         ? 'border-sky-400 bg-slate-900/75 text-white shadow-[0_0_20px_rgba(56,189,248,0.4)] ring-2 ring-sky-400/50'
                         : 'border-white/20 bg-slate-900/55 text-white hover:border-white/40 hover:bg-slate-900/75 shadow-sm'
                     }`}
                   >
-                    <div className="flex min-w-0 items-center gap-2 sm:gap-3">
+                    <div className="flex min-w-0 items-center gap-2 sm:gap-2.5">
                       <img
                         src={item.heroAsset}
                         alt=""
                         aria-hidden="true"
                         loading="lazy"
                         decoding="async"
-                        className="hidden h-11 w-16 shrink-0 rounded-xl object-cover ring-1 ring-white/15 sm:block"
+                        className="hidden h-10 w-14 shrink-0 rounded-xl object-cover ring-1 ring-white/15 sm:block"
                       />
                       <div className="min-w-0">
-                        <div className="flex items-center gap-1.5 sm:gap-2">
+                        <div className="flex items-center gap-1.5">
                           <span className="block truncate text-[11px] font-bold tracking-tight text-white sm:text-sm">
                             {item.shortLabel}
                           </span>
                           {active && (
-                            <span className="hidden items-center rounded-full bg-sky-500/20 px-2 py-0.5 text-[10px] font-bold text-sky-300 ring-1 ring-sky-400/30 sm:inline-flex">
+                            <span className="hidden items-center rounded-full bg-sky-500/20 px-1.5 py-0.5 text-[10px] font-bold text-sky-300 ring-1 ring-sky-400/30 xl:inline-flex">
                               Aktif
                             </span>
                           )}
                         </div>
-                        <span className="hidden truncate text-[11px] text-white/75 sm:block">
+                        <span className="hidden truncate text-[11px] text-white/75 md:block">
                           {item.metadata.regionName}
                         </span>
                       </div>
@@ -740,7 +706,7 @@ export function LandingPage() {
 
                     <span
                       aria-hidden="true"
-                      className={`inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[10px] font-bold transition sm:h-7 sm:w-7 sm:text-xs ${
+                      className={`inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[10px] font-bold transition sm:h-6 sm:w-6 sm:text-xs ${
                         active
                           ? 'bg-sky-500 text-white shadow-md'
                           : 'bg-white/10 text-white/75 group-hover:bg-white/20 group-hover:text-white'
@@ -753,6 +719,38 @@ export function LandingPage() {
               })}
             </div>
           </div>
+
+          {/* Bottom-Right Corner: Additional QR Code Card (Panduan Pengguna QDI) */}
+          <a
+            href="https://cdn.sanity.io/files/vymwpeju/production/1ac8096741f72149bc10508339b8daf8a77bb186.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-testid="qr-panduan-qdi-card"
+            className="group flex shrink-0 items-center gap-3 self-end rounded-2xl border border-white/20 bg-slate-900/60 p-2 pr-3.5 text-white shadow-lg backdrop-blur-md transition duration-200 hover:-translate-y-0.5 hover:border-sky-300/60 hover:bg-slate-900/80"
+          >
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-white p-1 shadow-xs ring-1 ring-white/40 sm:h-14 sm:w-14">
+              <img
+                src={resolvePublicAsset('assets/qr-panduan-qdi.svg')}
+                alt="QR Code Panduan Pengguna QDI"
+                width={56}
+                height={56}
+                decoding="async"
+                className="h-full w-full object-contain"
+              />
+            </div>
+
+            <div className="min-w-0">
+              <span className="inline-flex items-center rounded bg-sky-500/25 px-1.5 py-0.5 text-[9px] font-extrabold tracking-wider text-sky-200 uppercase ring-1 ring-sky-300/30">
+                Scan QR / Klik
+              </span>
+              <div className="mt-0.5 text-xs font-extrabold tracking-tight text-white sm:text-sm leading-tight">
+                Panduan Pengguna QDI
+              </div>
+              <p className="mt-0.5 text-[10px] leading-tight text-white/75">
+                Buka dokumen panduan (PDF)
+              </p>
+            </div>
+          </a>
 
           <span data-testid="release-version" className="sr-only">
             Rilis: {ENV.RELEASE_VERSION}
