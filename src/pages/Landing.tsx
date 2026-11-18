@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ENV, resolvePublicAsset } from '../config/env'
 import { getSafeServiceUrl, SERVICE_TARGETS } from '../config/services'
@@ -6,6 +6,10 @@ import { ISLAND_SITES, SITE_LIST, type SiteKey } from '../config/sites'
 import { useSiteContext } from '../context/site-context'
 import { trackEvent } from '../analytics/track'
 import { ArchipelagoMinimap } from '../components/ArchipelagoMinimap'
+import { usePublishedContent } from '../content/useContent'
+
+const DEFAULT_QDI_GUIDE_PDF_URL =
+  'https://cdn.sanity.io/files/vymwpeju/production/b5b27432eeb185c158384455913f2402ef38ad08.pdf'
 
 export function LandingPage() {
   const {
@@ -27,6 +31,25 @@ export function LandingPage() {
     typeof navigator !== 'undefined' ? !navigator.onLine : false,
   )
   const [minimapModalOpen, setMinimapModalOpen] = useState(false)
+  const { data: publishedContent } = usePublishedContent()
+
+  const qdiGuidePdfUrl = useMemo(() => {
+    const items = publishedContent?.items ?? []
+    const qdiDoc = items.find(
+      (item) =>
+        Boolean(item.documentUrl) &&
+        /^https?:\/\//i.test(item.documentUrl || '') &&
+        (item.slug === 'panduan-pengguna-publik-qdi-sulut' ||
+          item.slug.toLowerCase().includes('qdi') ||
+          item.title.toLowerCase().includes('qdi')),
+    )
+    return qdiDoc?.documentUrl || DEFAULT_QDI_GUIDE_PDF_URL
+  }, [publishedContent])
+
+  const qdiGuideQrSrc =
+    qdiGuidePdfUrl === DEFAULT_QDI_GUIDE_PDF_URL
+      ? resolvePublicAsset('assets/qr-panduan-qdi.svg')
+      : `https://api.qrserver.com/v1/create-qr-code/?size=300x300&format=svg&margin=4&data=${encodeURIComponent(qdiGuidePdfUrl)}`
 
   useEffect(() => {
     const handleOnline = () => setIsOffline(false)
@@ -731,7 +754,7 @@ export function LandingPage() {
 
           {/* 4. QR Code Card (Panduan Pengguna QDI): Tight Fit (Zero Empty Space) on Mobile & Desktop */}
           <a
-            href="https://cdn.sanity.io/files/vymwpeju/production/1ac8096741f72149bc10508339b8daf8a77bb186.pdf"
+            href={qdiGuidePdfUrl}
             target="_blank"
             rel="noopener noreferrer"
             data-testid="qr-panduan-qdi-card"
@@ -739,7 +762,7 @@ export function LandingPage() {
           >
             <div className="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-white p-1 shadow-xs ring-1 ring-white/40 sm:h-14 sm:w-14">
               <img
-                src={resolvePublicAsset('assets/qr-panduan-qdi.svg')}
+                src={qdiGuideQrSrc}
                 alt="QR Code Panduan Pengguna QDI"
                 width={56}
                 height={56}
