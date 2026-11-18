@@ -22,7 +22,7 @@ export const SERVICE_TARGETS: Record<ServiceKey, ServiceTarget> = {
     label: 'Akses Layanan Karantina',
     subtitle: 'PTK Online Barantin',
     shortDescription:
-      'Permohonan, persyaratan, prosedur, dan layanan terkait.',
+      'Akses ke layanan resmi, persyaratan, dan panduan karantina',
     actionLabel: 'Buka PTK Online',
     url: ENV.PTK_URL,
     enabled: true,
@@ -34,7 +34,7 @@ export const SERVICE_TARGETS: Record<ServiceKey, ServiceTarget> = {
     label: 'Decision Intelligence (QDI)',
     subtitle: 'Quarantine Decision Intelligence (QDI)',
     shortDescription:
-      'Data, analitik, dan dukungan pengambilan keputusan.',
+      'Insight berbasis data untuk membaca pola, risiko, dan mendukung pengambilan keputusan',
     actionLabel: 'Buka Platform QDI',
     url: ENV.QDI_URL,
     enabled: true,
@@ -46,7 +46,7 @@ export const SERVICE_TARGETS: Record<ServiceKey, ServiceTarget> = {
     label: 'Informasi & Sosialisasi',
     subtitle: 'Portal PPID & Kehumasan',
     shortDescription:
-      'Berita, pengumuman, dan edukasi karantina.',
+      'Informasi layanan, pengumuman, dan edukasi karantina',
     actionLabel: 'Buka Portal Informasi',
     url: ENV.INFO_URL,
     enabled: true,
