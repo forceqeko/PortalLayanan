@@ -46,7 +46,7 @@ export const SITE_CONFIGS: Record<SiteKey, SiteConfig> = {
     heroCaption: 'Perairan Teluk Manado dan Pulau Bunaken, Sulawesi Utara.',
     tagline: 'Portal Gerbang Akses Layanan Karantina, Informasi, dan Decision Intelligence',
     subtitle:
-      'Data, layanan, dan informasi karantina untuk melindungi sumber daya hayati Sulawesi Utara.',
+      'Menghubungkan informasi, layanan resmi, dan insight karantina untuk keamanan hayati, ketahanan pangan, dan kelancaran perdagangan dari Sulawesi Utara.',
     servicePointLabel: 'Balai Karantina Hewan, Ikan, dan Tumbuhan Sulawesi Utara',
     localAnnouncement:
       'Pelayanan pemeriksaan dokumen dan fisik karantina beroperasi pada pelabuhan, bandara, dan pos kepulauan di Siau, Tahuna, serta Melonguane.',
@@ -78,7 +78,7 @@ export const SITE_CONFIGS: Record<SiteKey, SiteConfig> = {
     heroCaption: 'Pesisir Pulau Siau dan Gunung Karangetang di Kepulauan Sitaro.',
     tagline: 'Portal Gerbang Akses Layanan Karantina, Informasi, dan Decision Intelligence',
     subtitle:
-      'Data, layanan, dan informasi karantina untuk melindungi sumber daya hayati di Kepulauan Sitaro (Siau).',
+      'Menghubungkan informasi, layanan resmi, dan insight karantina untuk keamanan hayati, ketahanan pangan, dan kelancaran perdagangan dari Kepulauan Sitaro (Siau).',
     servicePointLabel: 'Pos Pelayanan Karantina Siau (Kepulauan Sitaro)',
     localAnnouncement:
       'Pastikan pengajuan PTK Online dilakukan sebelum keberangkatan kapal dari Pelabuhan Ulu Siau dan Pelabuhan Ondong.',
@@ -106,7 +106,7 @@ export const SITE_CONFIGS: Record<SiteKey, SiteConfig> = {
     heroCaption: 'Teluk Tahuna dan perbukitan Pulau Sangihe.',
     tagline: 'Portal Gerbang Akses Layanan Karantina, Informasi, dan Decision Intelligence',
     subtitle:
-      'Data, layanan, dan informasi karantina untuk melindungi sumber daya hayati di Kepulauan Sangihe (Tahuna).',
+      'Menghubungkan informasi, layanan resmi, dan insight karantina untuk keamanan hayati, ketahanan pangan, dan kelancaran perdagangan dari Kepulauan Sangihe (Tahuna).',
     servicePointLabel: 'Pos Pelayanan Karantina Tahuna (Kepulauan Sangihe)',
     localAnnouncement:
       'Melayani sertifikasi komoditas perikanan, pertanian, dan peternakan di Pelabuhan Nusantara Tahuna dan Bandara Naha.',
@@ -134,7 +134,7 @@ export const SITE_CONFIGS: Record<SiteKey, SiteConfig> = {
     heroCaption: 'Perairan pesisir Melonguane di Kepulauan Talaud.',
     tagline: 'Portal Gerbang Akses Layanan Karantina, Informasi, dan Decision Intelligence',
     subtitle:
-      'Data, layanan, dan informasi karantina untuk melindungi sumber daya hayati di perbatasan Kepulauan Talaud (Melonguane).',
+      'Menghubungkan informasi, layanan resmi, dan insight karantina untuk keamanan hayati, ketahanan pangan, dan kelancaran perdagangan dari Kepulauan Talaud (Melonguane).',
     servicePointLabel: 'Pos Pelayanan Karantina Melonguane (Kepulauan Talaud)',
     localAnnouncement:
       'Pengawasan lalu lintas media pembawa antar-area dan perbatasan di Pelabuhan serta Bandara Melonguane.',
